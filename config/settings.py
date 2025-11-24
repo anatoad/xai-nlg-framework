@@ -41,7 +41,7 @@ class FrameworkConfig:
     nlg: NLGConfig = None
     validator: ValidatorConfig = None
     random_seed: int = 42
-    verbose: bool = True
+    verbose: bool = False
 
     def __post_init__(self):
         if self.explainer is None:

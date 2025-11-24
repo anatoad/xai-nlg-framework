@@ -1,6 +1,7 @@
 import numpy as np
 import shap
 import logging
+import pandas as pd
 from typing import Dict, List
 from .base import BaseExplainer
 
@@ -149,3 +150,11 @@ class SHAPExplainer(BaseExplainer):
                 return float(base[1])  # choose positive class (index 1)
 
         return float(base)
+
+    def explanation_to_dataframe(
+            self,
+            explanation: Dict[str, float],
+            instance: np.ndarray = None,
+            sort_by: str = "absolute"
+        ) -> pd.DataFrame:
+        return self._explanation_to_dataframe("SHAP", explanation=explanation, instance=instance, sort_by=sort_by)
