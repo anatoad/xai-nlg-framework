@@ -1,0 +1,4 @@
+timestamp,statement,method,features,contributions,fidelity_score,validation_status
+2025-11-24T22:21:33.806834,The worst area (value: 0.07) strongly supports the prediction.,shap,[np.str_('worst area')],[0.06724261426271144],0.95,{}
+2025-11-24T22:21:33.806846,The worst concave points (value: 0.06) strongly supports the prediction.,shap,[np.str_('worst concave points')],[0.05740842121890832],0.95,{}
+2025-11-24T22:21:33.806849,The mean concave points (value: 0.04) strongly supports the prediction.,shap,[np.str_('mean concave points')],[0.04227830540602773],0.95,{}
