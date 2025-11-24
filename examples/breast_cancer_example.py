@@ -44,14 +44,22 @@ print(f"Prediction: {result['prediction']}")
 print(f"Generated Explanation: {result['generated_text']}")
 print(f"Validation Score: {result['validation']['clarity_score']:.2f}")
 
+print(result["ranked_features"][:5])  # top 5 (feature, contribution)
+
+for fs in result["statements"][:5]:
+    print(fs.rank, fs.feature, fs.value, "->", fs.statement)
+
+print(result["validation"])  # clarity score, sum conservation etc.
+
 # track evidence
 for statement in result["statements"][:3]:
     pipeline.evidence_tracker.add_record(
         statement=statement.statement,
-        method=result['method'],
-        features=[statement.feature],
-        contributions=[statement.value],
-        fidelity_score=0.95
+        method=result["method"],
+        features=[str(statement.feature)],
+        contributions=[float(statement.value)],
+        fidelity_score=0.95,
+        validation_status=result["validation"],
     )
 
 # export evidence

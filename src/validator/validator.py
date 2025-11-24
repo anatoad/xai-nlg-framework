@@ -88,29 +88,32 @@ class XAIValidator:
         explanation: Dict[str, float],
         generated_text: str,
         base_value: float,
-        prediction: float
+        prediction: float,
+        method: str = "shap",
     ) -> Dict:
         """
         Run all validation checks.
-        
-        Args:
-            explanation: Feature contributions
-            generated_text: Generated natural language
-            base_value: Expected model output
-            prediction: Actual prediction
-            
+
         Returns:
-            Dictionary of validation results
+            {
+                "sum_conservation_valid": bool,   # only for SHAP
+                "computed_sum": float,            # only for SHAP
+                "clarity_score": float,
+                ...
+            }
         """
-        results = {}
-        
-        if self.config.verify_sum_conservation:
+        results: Dict[str, Any] = {}
+
+        # only SHAP should be checked for sum conservation
+        if self.config.verify_sum_conservation and method == "shap":
             is_valid, computed = self.verify_sum_conservation(
                 explanation, base_value, prediction
             )
-            results["sum_conservation_valid"] = is_valid
-            results["computed_sum"] = computed
-        
-        results["clarity_score"] = self.compute_clarity_score(generated_text)
-        
+            results["sum_conservation_valid"] = bool(is_valid)
+            results["computed_sum"] = float(computed)
+
+        # always compute clarity score, and make sure it's a plain float
+        results["clarity_score"] = float(self.compute_clarity_score(generated_text))
+
         return results
+

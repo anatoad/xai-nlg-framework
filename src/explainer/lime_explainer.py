@@ -57,25 +57,41 @@ class LIMEExplainer(BaseExplainer):
         return description.strip()
 
     def explain(self, instance: np.ndarray) -> Dict[str, float]:
+        """Generate LIME explanation for a single instance."""
         exp = self.explainer.explain_instance(
             instance,
             self.model.predict_proba,
             num_features=self.n_features,
-            num_samples=self.n_samples
+            num_samples=self.n_samples,
         )
 
-        explanation = {}
-        for feature_description, weight in exp.as_list():
-            # extract feature name and weight
-            feature_name = self._extract_feature_name_from_description(feature_description)
-            explanation[feature_name] = float(weight)
-        
-        # fill missing features with 0
+        # Use index-based map instead of human-readable strings
+        exp_map = exp.as_map()
+        # exp_map is {class_index: [(feature_idx, weight), ...]}
+
+        if isinstance(exp_map, dict):
+            if len(exp_map) == 1:
+                # single output (regression or single-class map)
+                contribs = next(iter(exp_map.values()))
+            else:
+                # binary classifier: use positive class 1 by convention
+                contribs = exp_map.get(1, next(iter(exp_map.values())))
+        else:
+            contribs = exp_map
+
+        explanation: Dict[str, float] = {}
+
+        # Aggregate contributions per original feature
+        for idx, weight in contribs:
+            fname = str(self.feature_names[idx])
+            explanation[fname] = explanation.get(fname, 0.0) + float(weight)
+
+        # Ensure all features are present
         for fname in self.feature_names:
-            if fname not in explanation:
-                explanation[fname] = 0.0
+            explanation.setdefault(fname, 0.0)
 
         return explanation
+
     
     def explain_batch(self, instances: np.ndarray) -> List[Dict[str, float]]:
         return [self.explain(instance) for instance in instances]
