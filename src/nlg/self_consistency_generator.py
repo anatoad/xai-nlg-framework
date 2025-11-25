@@ -1,6 +1,11 @@
 # src/nlg/self_consistency_generator.py
 """
 Self-Consistency prompting generator.
+
+This version:
+- Generates multiple independent explanations (chains)
+- Aggregates them using an LLM-based summary (if available)
+- Falls back to a simple majority-vote / first-chain strategy otherwise
 """
 
 from typing import Dict, Optional, Callable, List
@@ -12,8 +17,14 @@ class SelfConsistencyGenerator(BaseNLGGenerator):
     """
     Self-Consistency prompting based NLG generator.
 
-    - Generates multiple independent explanations (chains) and then aggregates them.
-    - Uses the same context structure as FewShot and CoT.
+    - Uses the same context structure as FewShot / CoT:
+      {
+        "features": [...],
+        "values": [...],
+        "directions": [...],   # optional
+        "prediction": "...",
+        "method": "shap" / "lime"
+      }
     """
 
     def __init__(
@@ -86,7 +97,7 @@ class SelfConsistencyGenerator(BaseNLGGenerator):
 
         if self.llm_call_fn is not None:
             text = self._call_llm(prompt)
-            return text.strip()
+            return str(text).strip()
 
         # fallback mock
         prediction = context.get("prediction", "")
@@ -95,18 +106,70 @@ class SelfConsistencyGenerator(BaseNLGGenerator):
             "from the most important features."
         )
 
-    def _aggregate_chains(self, chains: List[str]) -> str:
+    # --------- new: LLM-based aggregated summary over chains --------- #
+
+    def _build_aggregation_prompt(self, chains: List[str], context: Dict) -> str:
+        """
+        Build a prompt that shows all chains and asks the LLM
+        to aggregate them into a single, consistent explanation.
+        """
+        prediction = context.get("prediction", "")
+        base_ctx = self._format_context(context)
+
+        prompt = (
+            "You are an explainable AI assistant.\n"
+            "You are given several independent explanations generated for the same model prediction.\n"
+            "Your task is to aggregate them into a single, coherent explanation.\n\n"
+            "Rules:\n"
+            "- Write the final explanation ONLY in English.\n"
+            "- Do NOT invent exact numeric percentages or counts that are not in the input.\n"
+            "- Do NOT introduce new features that are not listed in the context or in the explanations.\n"
+            "- Focus on points that appear in at least two explanations, or are clearly consistent.\n"
+            "- Provide a clear explanation in 3–6 sentences.\n\n"
+            "--- Prediction & top factors (context) ---\n"
+            f"{base_ctx}\n\n"
+            "--- Independent explanations ---\n"
+        )
+
+        for i, c in enumerate(chains, start=1):
+            prompt += f"\nExplanation {i}:\n{c.strip()}\n"
+
+        prompt += (
+            "\n--- Task ---\n"
+            "Combine the key consistent ideas from these explanations into ONE final explanation.\n"
+            "Write only the final explanation, with no preamble or bullet points.\n"
+        )
+
+        return prompt
+
+    def _aggregate_chains(self, chains: List[str], context: Dict) -> str:
         """
         Aggregate multiple reasoning chains.
 
-        Simple strategy:
-        - If one explanation appears more than once, return the most frequent.
-        - Otherwise, return the first non-empty explanation.
+        Strategy:
+        1) If an LLM is available: use it to produce an aggregated summary
+           over all chains (LLM-based self-consistency).
+        2) If no LLM or something fails:
+           - if one explanation appears more than once, return the most frequent;
+           - otherwise, return the first non-empty explanation.
         """
         clean_chains = [c.strip() for c in chains if c and c.strip()]
         if not clean_chains:
             return ""
 
+        # 1) Preferred path: LLM-based aggregation
+        if self.llm_call_fn is not None:
+            try:
+                agg_prompt = self._build_aggregation_prompt(clean_chains, context)
+                aggregated = self._call_llm(agg_prompt)
+                aggregated = str(aggregated).strip()
+                if aggregated:
+                    return aggregated
+            except Exception:
+                # dacă ceva crapă, trecem la fallback-ul clasic
+                pass
+
+        # 2) Fallback: majority vote / first non-empty
         counts = Counter(clean_chains)
         most_common, freq = counts.most_common(1)[0]
 
@@ -128,7 +191,7 @@ class SelfConsistencyGenerator(BaseNLGGenerator):
         for i in range(1, self.n_chains + 1):
             chains.append(self.generate_single_chain(context, chain_id=i))
 
-        aggregated = self._aggregate_chains(chains)
+        aggregated = self._aggregate_chains(chains, context)
         if aggregated:
             return aggregated
 
