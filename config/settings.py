@@ -23,6 +23,7 @@ class NLGConfig:
     max_tokens: int = 200
     techniques: List[str] = None  # ["few_shot", "cot", "self_consistency"]
     api_key: Optional[str] = None
+    debug_print_prompt: bool = False 
 
     def __post_init__(self):
         if self.techniques is None:
