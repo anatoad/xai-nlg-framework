@@ -17,7 +17,8 @@ class NormalizerConfig:
 @dataclass
 class NLGConfig:
     model_name: str = "llama3:latest"
-    #model_name: str = "deepseek-r1:8b"
+    # model_name: str = "qwen3-vl:235b"
+    # model_name: str = "deepseek-r1:8b"
     temperature: float = 0.3
     max_tokens: int = 200
     techniques: List[str] = None  # ["few_shot", "cot", "self_consistency"]

@@ -41,10 +41,6 @@ class XAINLGPipeline:
 
         self._init_components()
 
-    # ------------------------------------------------------------------ #
-    #  COMPONENT INITIALIZATION                                          #
-    # ------------------------------------------------------------------ #
-
     def _init_components(self):
         # layer 1: explainers
         self.shap_explainer = SHAPExplainer(
@@ -77,10 +73,6 @@ class XAINLGPipeline:
         # layer 4: validator & evidence tracker
         self.validator = XAIValidator(self.config.validator)
         self.evidence_tracker = EvidenceTracker()
-
-    # ------------------------------------------------------------------ #
-    #  MAIN ENTRY POINT: EXPLAIN SINGLE INSTANCE                         #
-    # ------------------------------------------------------------------ #
 
     def explain_instance(
         self,

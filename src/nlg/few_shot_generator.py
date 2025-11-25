@@ -1,4 +1,3 @@
-# src/nlg/few_shot_generator.py
 from typing import Dict, List, Optional, Callable
 from .base_generator import BaseNLGGenerator
 
@@ -7,8 +6,8 @@ class FewShotGenerator(BaseNLGGenerator):
     """
     Few-Shot prompting based NLG generator.
 
-    - Input: English (prediction, features, directions, method).
-    - Output: English explanations.
+    - Input: prediction, features, directions, method
+    - Output: English natural language explanations
     - audience:
         * "expert"  -> technical explanation
         * "layman"  -> simple explanation for non-expert
@@ -30,10 +29,6 @@ class FewShotGenerator(BaseNLGGenerator):
         """
         super().__init__(config, llm_call_fn=llm_call_fn)
         self.examples = examples or self._get_default_examples()
-
-    # ------------------------------------------------------------------ #
-    #  DEFAULT FEW-SHOT EXAMPLES (INPUT + OUTPUT IN ENGLISH)             #
-    # ------------------------------------------------------------------ #
 
     def _get_default_examples(self) -> Dict[str, List[Dict]]:
         """
@@ -123,9 +118,6 @@ class FewShotGenerator(BaseNLGGenerator):
             "layman": layman_examples,
         }
 
-    # ------------------------------------------------------------------ #
-    #  CONTEXT FORMATTING (INPUT 100% ENGLISH)                           #
-    # ------------------------------------------------------------------ #
 
     def _format_context(self, context: Dict) -> str:
         """
@@ -159,9 +151,6 @@ class FewShotGenerator(BaseNLGGenerator):
 
         return formatted
 
-    # ------------------------------------------------------------------ #
-    #  GUIDELINES (OUTPUT MUST BE ENGLISH, HIGH-FIDELITY)                #
-    # ------------------------------------------------------------------ #
 
     def _build_guidelines(self, style: str) -> str:
         """
@@ -223,9 +212,6 @@ class FewShotGenerator(BaseNLGGenerator):
             return self.examples[style]
         return self.examples.get("expert", [])
 
-    # ------------------------------------------------------------------ #
-    #  PROMPT: SINGLE STYLE (expert / layman)                            #
-    # ------------------------------------------------------------------ #
 
     def build_few_shot_prompt(self, context: Dict, style: str = "expert") -> str:
         """
@@ -256,9 +242,6 @@ class FewShotGenerator(BaseNLGGenerator):
         )
         return prompt
 
-    # ------------------------------------------------------------------ #
-    #  PROMPT: BOTH VIEWS IN A SINGLE OUTPUT (EXPERT + LAYMAN)           #
-    # ------------------------------------------------------------------ #
 
     def build_dual_prompt(self, context: Dict) -> str:
         """
@@ -330,10 +313,6 @@ class FewShotGenerator(BaseNLGGenerator):
 
         return prompt
 
-    # ------------------------------------------------------------------ #
-    #  MOCK FALLBACK (NO LLM)                                           #
-    # ------------------------------------------------------------------ #
-
     def _mock_generate(self, context: Dict, style: str = "expert") -> str:
         """
         Fallback if no LLM is configured.
@@ -379,10 +358,6 @@ class FewShotGenerator(BaseNLGGenerator):
                 "prediction towards this class, while 'contradicts' partially offset them without changing "
                 "the final class."
             )
-
-    # ------------------------------------------------------------------ #
-    #  PUBLIC API                                                        #
-    # ------------------------------------------------------------------ #
 
     def generate(self, context: Dict) -> str:
         """

@@ -1,13 +1,3 @@
-# src/nlg/self_consistency_generator.py
-"""
-Self-Consistency prompting generator.
-
-This version:
-- Generates multiple independent explanations (chains)
-- Aggregates them using an LLM-based summary (if available)
-- Falls back to a simple majority-vote / first-chain strategy otherwise
-"""
-
 from typing import Dict, Optional, Callable, List
 from collections import Counter
 from .base_generator import BaseNLGGenerator
@@ -16,6 +6,9 @@ from .base_generator import BaseNLGGenerator
 class SelfConsistencyGenerator(BaseNLGGenerator):
     """
     Self-Consistency prompting based NLG generator.
+    - Generates multiple independent explanations (chains)
+    - Aggregates them using an LLM-based summary (if available)
+    - Falls back to a simple majority-vote / first-chain strategy otherwise
 
     - Uses the same context structure as FewShot / CoT:
       {
@@ -42,12 +35,7 @@ class SelfConsistencyGenerator(BaseNLGGenerator):
         super().__init__(config, llm_call_fn=llm_call_fn)
         self.n_chains = max(1, int(n_chains))
 
-    # ---------------------- helpers ---------------------- #
-
     def _format_context(self, context: Dict) -> str:
-        """
-        Same style as in FewShot: everything in English.
-        """
         features = context.get("features", [])
         values = context.get("values", [])
         directions = context.get("directions")
@@ -105,8 +93,6 @@ class SelfConsistencyGenerator(BaseNLGGenerator):
             f"(chain {chain_id}) The model suggests '{prediction}' based on the pattern of contributions "
             "from the most important features."
         )
-
-    # --------- new: LLM-based aggregated summary over chains --------- #
 
     def _build_aggregation_prompt(self, chains: List[str], context: Dict) -> str:
         """
@@ -166,7 +152,6 @@ class SelfConsistencyGenerator(BaseNLGGenerator):
                 if aggregated:
                     return aggregated
             except Exception:
-                # dacă ceva crapă, trecem la fallback-ul clasic
                 pass
 
         # 2) Fallback: majority vote / first non-empty
@@ -178,8 +163,6 @@ class SelfConsistencyGenerator(BaseNLGGenerator):
 
         # all are unique → just return the first
         return clean_chains[0]
-
-    # ---------------------- public API ---------------------- #
 
     def generate(self, context: Dict) -> str:
         """

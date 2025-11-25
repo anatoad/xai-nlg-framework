@@ -1,8 +1,3 @@
-# src/nlg/cot_generator.py
-"""
-Chain-of-Thought prompting generator.
-"""
-
 from typing import Dict, Optional, Callable, List
 from .base_generator import BaseNLGGenerator
 
@@ -19,7 +14,6 @@ class ChainOfThoughtGenerator(BaseNLGGenerator):
         - directions: list of 'supports' / 'contradicts' / 'neutral'
         - method: 'shap' / 'lime' (optional)
     """
-
     def __init__(
         self,
         config,
@@ -28,11 +22,7 @@ class ChainOfThoughtGenerator(BaseNLGGenerator):
         super().__init__(config, llm_call_fn=llm_call_fn)
 
     # ---------------------- helpers ---------------------- #
-
     def _format_context(self, context: Dict) -> str:
-        """
-        Same style as in FewShot: everything in English.
-        """
         features = context.get("features", [])
         values = context.get("values", [])
         directions = context.get("directions")
@@ -111,8 +101,6 @@ class ChainOfThoughtGenerator(BaseNLGGenerator):
             "as 'contradicts' partially offset it. Overall, the positive contributions dominate, which explains "
             "why the model selects this outcome."
         )
-
-    # ---------------------- public API ---------------------- #
 
     def generate(self, context: Dict) -> str:
         """

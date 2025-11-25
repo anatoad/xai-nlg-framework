@@ -1,28 +1,16 @@
-# src/nlg/base_generator.py
 from abc import ABC, abstractmethod
 from typing import Dict, Callable, Optional
 from config.settings import NLGConfig
 
-# tip pentru funcția care cheamă LLM-ul (Ollama la noi)
 LLMCallFn = Callable[[str, NLGConfig], str]
 
-
 class BaseNLGGenerator(ABC):
-    """
-    Abstract base class pentru generatoarele NLG.
-
-    Ideea: subclasele construiesc prompturi și apoi (opțional) cheamă LLM-ul
-    prin llm_call_fn. Dacă llm_call_fn este None, pot folosi mock-uri sau
-    template-uri simple.
-    """
 
     def __init__(self, config: NLGConfig, llm_call_fn: Optional[LLMCallFn] = None):
         self.config = config
         self.model_name = config.model_name
         self.temperature = config.temperature
         self.max_tokens = config.max_tokens
-
-        # funcția care chiar apelează LLM-ul (ex. ollama_llm_call)
         self.llm_call_fn = llm_call_fn
 
     @abstractmethod
@@ -40,8 +28,7 @@ class BaseNLGGenerator(ABC):
 
     def build_prompt(self, context: Dict) -> str:
         """
-        Prompt simplu din context (fallback).
-        Subclasele pot să-l folosească sau să îl suprascrie.
+        Build a simple prompt from the provided context.
         """
         features = context.get("features", [])
         values = context.get("values", [])
