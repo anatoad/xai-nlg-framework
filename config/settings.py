@@ -16,15 +16,16 @@ class NormalizerConfig:
 
 @dataclass
 class NLGConfig:
-    model_name: str = "gpt-3.5-turbo"
-    temperature: float = 0.7
-    max_tokens: int = 150
+    model_name: str = "llama3:latest"
+    #model_name: str = "deepseek-r1:8b"
+    temperature: float = 0.3
+    max_tokens: int = 200
     techniques: List[str] = None  # ["few_shot", "cot", "self_consistency"]
     api_key: Optional[str] = None
 
     def __post_init__(self):
         if self.techniques is None:
-            self.techniques = ["few_shot", "cot"]
+            self.techniques = ["few_shot", "cot", "self_consistency"]
 
 @dataclass
 class ValidatorConfig:

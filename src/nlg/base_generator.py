@@ -1,36 +1,66 @@
+# src/nlg/base_generator.py
 from abc import ABC, abstractmethod
-from typing import Dict, List
+from typing import Dict, Callable, Optional
 from config.settings import NLGConfig
 
+# tip pentru funcția care cheamă LLM-ul (Ollama la noi)
+LLMCallFn = Callable[[str, NLGConfig], str]
+
+
 class BaseNLGGenerator(ABC):
-    def __init__(self, config: NLGConfig):
+    """
+    Abstract base class pentru generatoarele NLG.
+
+    Ideea: subclasele construiesc prompturi și apoi (opțional) cheamă LLM-ul
+    prin llm_call_fn. Dacă llm_call_fn este None, pot folosi mock-uri sau
+    template-uri simple.
+    """
+
+    def __init__(self, config: NLGConfig, llm_call_fn: Optional[LLMCallFn] = None):
         self.config = config
         self.model_name = config.model_name
         self.temperature = config.temperature
         self.max_tokens = config.max_tokens
-    
+
+        # funcția care chiar apelează LLM-ul (ex. ollama_llm_call)
+        self.llm_call_fn = llm_call_fn
+
     @abstractmethod
     def generate(self, context: Dict) -> str:
         """
         Generate natural language explanation.
-        
+
         Args:
             context: Dictionary with explanation context
-            
+
         Returns:
             Generated text
         """
-        pass
-    
+        raise NotImplementedError
+
     def build_prompt(self, context: Dict) -> str:
-        """Build prompt from context."""
+        """
+        Prompt simplu din context (fallback).
+        Subclasele pot să-l folosească sau să îl suprascrie.
+        """
         features = context.get("features", [])
         values = context.get("values", [])
         prediction = context.get("prediction", "")
-        
+
         prompt = f"Explain why the model predicted {prediction}.\n\n"
         prompt += "Key contributing factors:\n"
         for feature, value in zip(features, values):
             prompt += f"- {feature}: {value:.3f}\n"
-        
+
         return prompt
+
+    def _call_llm(self, prompt: str) -> str:
+        """
+        Helper: folosește funcția de LLM injectată în constructor.
+        """
+        if self.llm_call_fn is None:
+            raise RuntimeError(
+                "No LLM call function provided to BaseNLGGenerator. "
+                "Pass llm_call_fn=... when constructing the generator."
+            )
+        return self.llm_call_fn(prompt, self.config)
