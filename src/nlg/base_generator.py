@@ -2,15 +2,10 @@ from abc import ABC, abstractmethod
 from typing import Dict, Callable, Optional
 from config.settings import NLGConfig
 
-<<<<<<< HEAD
-=======
 # Type alias for the low-level LLM call function (e.g. ollama_llm_call)
->>>>>>> 67f8975 (Input Prompt Debugging)
 LLMCallFn = Callable[[str, NLGConfig], str]
 
 class BaseNLGGenerator(ABC):
-<<<<<<< HEAD
-=======
     """
     Base class for all NLG generators in the framework.
 
@@ -19,7 +14,6 @@ class BaseNLGGenerator(ABC):
     - optionally calling an external LLM through `llm_call_fn`
       (for example, an Ollama-backed model)
     """
->>>>>>> 67f8975 (Input Prompt Debugging)
 
     def __init__(self, config: NLGConfig, llm_call_fn: Optional[LLMCallFn] = None):
         """
@@ -32,11 +26,8 @@ class BaseNLGGenerator(ABC):
         self.model_name = config.model_name
         self.temperature = config.temperature
         self.max_tokens = config.max_tokens
-<<<<<<< HEAD
-=======
 
         # Function that actually calls the LLM (e.g. ollama_llm_call)
->>>>>>> 67f8975 (Input Prompt Debugging)
         self.llm_call_fn = llm_call_fn
 
     @abstractmethod
@@ -55,14 +46,10 @@ class BaseNLGGenerator(ABC):
 
     def build_prompt(self, context: Dict) -> str:
         """
-<<<<<<< HEAD
-        Build a simple prompt from the provided context.
-=======
         Simple fallback prompt builder.
 
         Subclasses can reuse this method or override it with a more
         sophisticated prompt tailored to their technique (Few-Shot, CoT, etc.).
->>>>>>> 67f8975 (Input Prompt Debugging)
         """
         features = context.get("features", [])
         values = context.get("values", [])
