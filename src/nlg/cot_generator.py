@@ -1,114 +1,151 @@
-from typing import Dict, Optional, Callable, List
+"""
+Chain-of-Thought NLG Generator.
+
+Uses step-by-step reasoning to generate explanations.
+"""
+from typing import Dict, Optional, Callable
+
 from .base_generator import BaseNLGGenerator
 
 
 class ChainOfThoughtGenerator(BaseNLGGenerator):
     """
-    Chain-of-Thought prompting based NLG generator.
-
-    - Uses the same context format as FewShotGenerator:
-      context:
-        - prediction: English string (e.g. 'benign tumor', 'high risk of breast cancer')
-        - features: list of feature names
-        - values: list of contribution values
-        - directions: list of 'supports' / 'contradicts' / 'neutral'
-        - method: 'shap' / 'lime' (optional)
+    Chain-of-Thought (CoT) prompting based NLG generator.
+    
+    Instructs the LLM to reason step-by-step before generating
+    the final explanation, improving logical coherence.
     """
+    
     def __init__(
         self,
-        config,
-        llm_call_fn: Optional[Callable] = None,
+        config=None,
+        llm_call_fn: Optional[Callable] = None
     ):
-        super().__init__(config, llm_call_fn=llm_call_fn)
-
-    # ---------------------- helpers ---------------------- #
-    def _format_context(self, context: Dict) -> str:
-        features = context.get("features", [])
-        values = context.get("values", [])
-        directions = context.get("directions")
-        prediction = context.get("prediction", "")
-        method = context.get("method", "")
-
-        formatted = f"Prediction: {prediction}\n"
-        if method:
-            formatted += f"Explanation method: {method}\n"
-
-        formatted += "Top factors:\n"
-
-        if directions is not None and len(directions) == len(features):
-            for f, v, d in zip(features, values, directions):
-                formatted += f"- {f} = {v:.3f} ({d})\n"
-        else:
-            for f, v in zip(features, values):
-                formatted += f"- {f} = {v:.3f}\n"
-
-        return formatted
-
-    def build_cot_prompt(self, context: Dict) -> str:
         """
-        Build a Chain-of-Thought style prompt:
-        - Ask the model to reason step by step
-        - But only show the final explanation explicitly.
+        Initialize CoT generator.
+        
+        Args:
+            config: NLGConfig
+            llm_call_fn: Function to call LLM
         """
-        guidelines = (
-            "You are an explainable AI assistant.\n"
-            "You receive model predictions and feature attributions (for example, SHAP or LIME values).\n"
-            "Your task is to reason step by step and then provide a clear explanation of the prediction.\n\n"
-            "Rules:\n"
-            "- The final explanation must be written ONLY in English.\n"
-            "- Do NOT invent exact numeric percentages or counts that are not in the input.\n"
-            "- Do NOT introduce new features that are not listed in the input.\n"
-            "- Respect the directions 'supports' / 'contradicts' / 'neutral'.\n"
-            "- Use the step-by-step reasoning only as an internal tool; the final explanation should be a clean paragraph.\n"
-        )
+        super().__init__(config, llm_call_fn)
+    
+    def _build_prompt(self, context: Dict) -> str:
+        """
+        Build the Chain-of-Thought prompt.
+        
+        Args:
+            context: Context dictionary
+            
+        Returns:
+            CoT prompt string
+        """
+        prompt = """You are an AI explanation assistant that reasons step-by-step.
 
-        prompt = (
-            guidelines
-            + "\n--- Input context ---\n"
-            + self._format_context(context)
-            + "\n\n--- Reasoning (you can think step by step here) ---\n"
-            "Think step by step about:\n"
-            "- What is the predicted outcome?\n"
-            "- Which factors have the largest absolute contributions?\n"
-            "- Which factors support the prediction and which ones oppose it?\n"
-            "- How do these factors jointly justify the final prediction?\n\n"
-            "Do NOT show this internal thought process directly in the final answer.\n"
-            "After you finish reasoning, write a concise explanation for the user.\n\n"
-            "--- Final answer ---\n"
-            "Now provide ONLY the final explanation in English (3–6 sentences):\n"
-        )
+Given model predictions and feature attributions, follow this reasoning process:
 
+Step 1: Identify the prediction
+Step 2: List the top contributing factors BY THEIR EXACT NAMES and their directions
+Step 3: Analyze which factors support vs oppose the prediction
+Step 4: Explain how the factors combine to produce the result
+Step 5: Write a clear, concise explanation (3-5 sentences)
+
+CRITICAL RULES:
+- You MUST use the EXACT feature names from the input (e.g., "worst area", "worst concave points")
+- Do NOT paraphrase or rename features (e.g., do NOT say "larger area" instead of "worst area")
+- Do NOT invent numbers not in the input
+- The final explanation must mention AT LEAST the top 3 features by their exact names
+
+---
+Input:
+"""
+        prompt += self._format_context(context)
+        
+        prompt += """
+
+Now reason through this step-by-step, then provide the final explanation.
+Remember: USE EXACT FEATURE NAMES from the input!
+
+Reasoning:
+Step 1: The model predicts"""
+        
         return prompt
-
-    def _mock_generate(self, context: Dict) -> str:
-        """
-        Fallback if no LLM is configured.
-        """
-        prediction = context.get("prediction", "")
-        features = context.get("features", [])
-        values = context.get("values", [])
-        directions = context.get("directions", [])
-        parts: List[str] = []
-        for i, (f, v) in enumerate(zip(features, values)):
-            d = directions[i] if i < len(directions) else "neutral"
-            parts.append(f"{f} ({v:.2f}, {d})")
-
-        factors = ", ".join(parts)
-
-        return (
-            f"The model predicts '{prediction}' based on several key factors: {factors}. "
-            "Features marked as 'supports' push the prediction towards this outcome, while those marked "
-            "as 'contradicts' partially offset it. Overall, the positive contributions dominate, which explains "
-            "why the model selects this outcome."
-        )
-
+    
     def generate(self, context: Dict) -> str:
         """
         Generate explanation using Chain-of-Thought prompting.
+        
+        Args:
+            context: Context dictionary
+            
+        Returns:
+            Generated explanation (extracted from CoT response)
         """
-        prompt = self.build_cot_prompt(context)
-
-        if self.llm_call_fn is not None:
-            return self._call_llm(prompt)
-
-        return self._mock_generate(context)
+        if self.llm_call_fn:
+            prompt = self._build_prompt(context)
+            response = self._call_llm(prompt)
+            
+            # Try to extract just the final explanation
+            # Look for common markers
+            markers = [
+                "Final explanation:",
+                "Final Explanation:",
+                "Explanation:",
+                "Step 5:",
+            ]
+            
+            for marker in markers:
+                if marker in response:
+                    parts = response.split(marker)
+                    if len(parts) > 1:
+                        explanation = parts[-1].strip()
+                        # Clean up any remaining markers
+                        for m in ["Step", "Reasoning:"]:
+                            if m in explanation:
+                                explanation = explanation.split(m)[0].strip()
+                        if len(explanation) > 50:  # Reasonable length
+                            return explanation
+            
+            # If no marker found, try to get the last substantial paragraph
+            paragraphs = [p.strip() for p in response.split('\n\n') if p.strip()]
+            if paragraphs:
+                # Return the last paragraph that's long enough
+                for p in reversed(paragraphs):
+                    if len(p) > 100 and not p.startswith("Step"):
+                        return p
+            
+            # If still nothing, return the whole response
+            return response
+        else:
+            return self._mock_generate(context)
+    
+    def _mock_generate(self, context: Dict) -> str:
+        """Generate mock CoT explanation."""
+        prediction = context.get("prediction", "the predicted outcome")
+        features = context.get("features", [])
+        values = context.get("values", [])
+        directions = context.get("directions", [])
+        method = context.get("method", "XAI")
+        
+        # Analyze features
+        supporting = [(f, v) for f, v, d in zip(features, values, directions) if d == "supports"]
+        opposing = [(f, v) for f, v, d in zip(features, values, directions) if d == "contradicts"]
+        
+        text = f"The model predicts '{prediction}' based on {method} analysis. "
+        
+        if supporting:
+            top_support = supporting[0]
+            text += f"The primary factor driving this prediction is {top_support[0].replace('_', ' ')} "
+            text += f"(contribution: {top_support[1]:.4f}), which strongly supports the outcome. "
+        
+        if len(supporting) > 1:
+            other_support = [f[0].replace('_', ' ') for f in supporting[1:3]]
+            text += f"Additional supporting factors include {', '.join(other_support)}. "
+        
+        if opposing:
+            text += f"While {opposing[0][0].replace('_', ' ')} provides some opposing evidence, "
+            text += "the supporting factors dominate the prediction. "
+        
+        text += "The combination of these factors leads to the final classification."
+        
+        return text

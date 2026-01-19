@@ -1,116 +1,92 @@
+"""
+Base class for XAI explainers.
+"""
 from abc import ABC, abstractmethod
-from typing import Dict, Any
+from typing import Dict, List, Any
 import numpy as np
 import pandas as pd
 
+
 class BaseExplainer(ABC):
-    def __init__(self, model, data, feature_names: list):
+    """Abstract base class for explainers (SHAP, LIME, etc.)."""
+    
+    def __init__(self, model, data: np.ndarray, feature_names: List[str]):
         """
-        Initialize the explainer with model
+        Initialize the explainer.
+        
         Args:
-            model: trained model with predict method
-            data: training data (numpy array or DataFrame)
-            feature_names: list of feature names
+            model: Trained ML model with predict/predict_proba methods
+            data: Training data for background (numpy array)
+            feature_names: List of feature names
         """
         self.model = model
-        self.data = data
-        self.feature_names = feature_names
+        self.data = np.array(data) if not isinstance(data, np.ndarray) else data
+        self.feature_names = list(feature_names)
         self.n_features = len(feature_names)
-    
+        
     @abstractmethod
     def explain(self, instance: np.ndarray) -> Dict[str, float]:
         """
-        Generate explanation for a single instance        
+        Generate explanation for a single instance.
+        
+        Args:
+            instance: 1D array of feature values
+            
         Returns:
             Dictionary mapping feature names to contribution values
         """
         pass
     
     @abstractmethod
-    def explain_batch(self, instances: np.ndarray) -> list:
-        """ Generate explanations for a batch """
+    def explain_batch(self, instances: np.ndarray) -> List[Dict[str, float]]:
+        """
+        Generate explanations for multiple instances.
+        
+        Args:
+            instances: 2D array of shape (n_samples, n_features)
+            
+        Returns:
+            List of explanation dictionaries
+        """
         pass
-
-    @abstractmethod
-    def explanation_to_dataframe(
+    
+    def get_base_value(self) -> float:
+        """Get the base/expected value for the explainer."""
+        return 0.0
+    
+    def to_dataframe(
         self,
         explanation: Dict[str, float],
         instance: np.ndarray = None,
         sort_by: str = "absolute"
     ) -> pd.DataFrame:
         """
-        Convert explanation to DataFrame for tabular visualization.
+        Convert explanation to a pandas DataFrame.
         
         Args:
-            explanation: Dictionary of feature names to explainer weights
-            instance: Original instance values (optional, for feature display)
-            sort_by: "absolute" (default), "positive", "negative", or None
+            explanation: Feature contribution dictionary
+            instance: Optional instance values
+            sort_by: "absolute" (by |value|), "value", or "name"
             
         Returns:
-            DataFrame with columns: Feature, Explainer Weight, Impact, Feature Value (if instance provided)
+            DataFrame with columns: feature, contribution, [value]
         """
-        pass
-    
-    def get_explanation_metadata(self, explanation: Dict[str, float]) -> Dict[str, Any]:
-        """ extract metadata about explanation """
-        values = list(explanation.values())
-        return {
-            "sum": sum(values),
-            "mean": np.mean(values),
-            "std": np.std(values),
-            "min": min(values),
-            "max": max(values),
-            "positive_count": sum(1 for v in values if v > 0),
-            "negative_count": sum(1 for v in values if v < 0),
+        data = {
+            'feature': list(explanation.keys()),
+            'contribution': list(explanation.values())
         }
-
-    def _explanation_to_dataframe(
-        self,
-        explainer_name: str,
-        explanation: Dict[str, float],
-        instance: np.ndarray = None,
-        sort_by: str = "absolute",
-    ) -> pd.DataFrame:
-            data = []
+        
+        if instance is not None:
+            data['value'] = [instance[self.feature_names.index(f)] 
+                           for f in explanation.keys()]
+        
+        df = pd.DataFrame(data)
+        
+        if sort_by == "absolute":
+            df = df.reindex(df['contribution'].abs().sort_values(ascending=False).index)
+        elif sort_by == "value":
+            df = df.sort_values('contribution', ascending=False)
+        elif sort_by == "name":
+            df = df.sort_values('feature')
             
-            for feature_name, shap_value in explanation.items():
-                # get feature value if instance provided
-                feature_idx = self.feature_names.index(feature_name) if feature_name in self.feature_names else -1
-                feature_value = instance[feature_idx] if instance is not None and feature_idx >= 0 else None
-                
-                # determine impact direction
-                if shap_value > 0:
-                    impact = "Positive"
-                elif shap_value < 0:
-                    impact = "Negative"
-                else:
-                    impact = "Neutral"
-                
-                row = {
-                    "Feature": feature_name,
-                    f"{explainer_name} Value": shap_value,
-                    "Absolute Value": abs(shap_value),
-                    "Impact": impact,
-                }
-
-                if feature_value is not None:
-                    row["Feature Value"] = feature_value
-                
-                data.append(row)
-            
-            df = pd.DataFrame(data)
-            
-            if sort_by == "absolute":
-                df = df.sort_values("Absolute Value", ascending=False)
-            elif sort_by == "positive":
-                df = df.sort_values(f"{explainer_name} Value", ascending=False)
-            elif sort_by == "negative":
-                df = df.sort_values(f"{explainer_name} Value", ascending=True)
-            
-            # drop helper column if not needed
-            if "Feature Value" not in df.columns or df["Feature Value"].isna().all():
-                df = df.drop("Absolute Value", axis=1)
-            else:
-                df = df[["Feature", "Feature Value", f"{explainer_name} Value", "Absolute Value", "Impact"]]
-            
-            return df.reset_index(drop=True)
+        return df.reset_index(drop=True)

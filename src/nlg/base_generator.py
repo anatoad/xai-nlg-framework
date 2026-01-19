@@ -1,85 +1,148 @@
+"""
+Base class for NLG generators.
+"""
 from abc import ABC, abstractmethod
 from typing import Dict, Callable, Optional
-from config.settings import NLGConfig
 
-# Type alias for the low-level LLM call function (e.g. ollama_llm_call)
-LLMCallFn = Callable[[str, NLGConfig], str]
 
 class BaseNLGGenerator(ABC):
     """
-    Base class for all NLG generators in the framework.
-
-    Subclasses are responsible for:
-    - building task-specific prompts from a `context` dict
-    - optionally calling an external LLM through `llm_call_fn`
-      (for example, an Ollama-backed model)
+    Abstract base class for all NLG generators.
+    
+    Generators convert structured XAI explanations into natural language text.
     """
-
-    def __init__(self, config: NLGConfig, llm_call_fn: Optional[LLMCallFn] = None):
+    
+    def __init__(
+        self,
+        config=None,
+        llm_call_fn: Optional[Callable[[str, any], str]] = None
+    ):
         """
+        Initialize the generator.
+        
         Args:
-            config: NLGConfig with model name, temperature, etc.
-            llm_call_fn: function that actually calls the LLM
-                         signature: (prompt: str, config: NLGConfig) -> str
+            config: NLGConfig object
+            llm_call_fn: Function to call LLM: (prompt, config) -> response
         """
         self.config = config
-        self.model_name = config.model_name
-        self.temperature = config.temperature
-        self.max_tokens = config.max_tokens
-
-        # Function that actually calls the LLM (e.g. ollama_llm_call)
         self.llm_call_fn = llm_call_fn
-
+        
+        # Extract config values
+        if config:
+            self.model_name = config.model_name
+            self.temperature = config.temperature
+            self.max_tokens = config.max_tokens
+            self.debug = getattr(config, 'debug_print_prompt', False)
+        else:
+            self.model_name = "llama3:latest"
+            self.temperature = 0.3
+            self.max_tokens = 300
+            self.debug = False
+    
     @abstractmethod
     def generate(self, context: Dict) -> str:
         """
-        Generate a natural language explanation from a context dictionary.
-
+        Generate natural language explanation from context.
+        
         Args:
-            context: dictionary containing everything the generator needs
-                     (features, values, prediction label, directions, etc.)
-
+            context: Dictionary containing:
+                - prediction: str
+                - features: List[str]
+                - values: List[float]
+                - directions: List[str] ("supports"/"contradicts"/"neutral")
+                - method: str ("SHAP"/"LIME")
+                
         Returns:
-            A textual explanation produced either by templates or by an LLM.
+            Generated explanation text
         """
-        raise NotImplementedError
-
-    def build_prompt(self, context: Dict) -> str:
-        """
-        Simple fallback prompt builder.
-
-        Subclasses can reuse this method or override it with a more
-        sophisticated prompt tailored to their technique (Few-Shot, CoT, etc.).
-        """
-        features = context.get("features", [])
-        values = context.get("values", [])
-        prediction = context.get("prediction", "")
-
-        prompt = f"Explain why the model predicted {prediction}.\n\n"
-        prompt += "Key contributing factors:\n"
-        for feature, value in zip(features, values):
-            prompt += f"- {feature}: {value:.3f}\n"
-
-        return prompt
-
+        pass
+    
     def _call_llm(self, prompt: str) -> str:
         """
-        Helper: call the underlying LLM via the injected function.
-
-        If `config.debug_print_prompt` is True, the prompt is printed to stdout
-        before the call. This is very useful for debugging and for demos
-        where we want to show exactly what the LLM receives.
+        Call the LLM with the given prompt.
+        
+        Args:
+            prompt: The prompt to send to the LLM
+            
+        Returns:
+            LLM response text
         """
+        if self.debug:
+            print("\n" + "="*60)
+            print("LLM PROMPT:")
+            print("="*60)
+            print(prompt)
+            print("="*60 + "\n")
+        
         if self.llm_call_fn is None:
             raise RuntimeError(
-                "No LLM call function provided to BaseNLGGenerator. "
-                "Pass llm_call_fn=... when constructing the generator."
+                "No LLM call function provided. Either pass llm_call_fn "
+                "or implement _mock_generate() for testing."
             )
-
-        # Optional debug: print the exact prompt sent to the LLM
-        if getattr(self.config, "debug_print_prompt", False):
-            print("\n================ LLM INPUT PROMPT ================")
-            print(prompt)
-            print("================ END OF PROMPT ==================\n")
-
-        return self.llm_call_fn(prompt, self.config)
+        
+        response = self.llm_call_fn(prompt, self.config)
+        return str(response).strip()
+    
+    def _format_context(self, context: Dict) -> str:
+        """
+        Format context into a string for the prompt.
+        
+        Args:
+            context: Context dictionary
+            
+        Returns:
+            Formatted string
+        """
+        prediction = context.get("prediction", "unknown")
+        method = context.get("method", "XAI")
+        features = context.get("features", [])
+        values = context.get("values", [])
+        directions = context.get("directions", [])
+        
+        lines = [
+            f"Prediction: {prediction}",
+            f"Explanation method: {method}",
+            "Top contributing factors:"
+        ]
+        
+        for i, (feat, val) in enumerate(zip(features, values)):
+            direction = directions[i] if i < len(directions) else "unknown"
+            lines.append(f"  - {feat} = {val:.4f} ({direction})")
+        
+        return "\n".join(lines)
+    
+    def _mock_generate(self, context: Dict) -> str:
+        """
+        Generate a mock explanation without calling LLM.
+        Override in subclasses for testing.
+        
+        Args:
+            context: Context dictionary
+            
+        Returns:
+            Mock explanation text
+        """
+        prediction = context.get("prediction", "the predicted outcome")
+        features = context.get("features", [])
+        values = context.get("values", [])
+        directions = context.get("directions", [])
+        
+        # Build simple explanation
+        parts = []
+        for i, (feat, val) in enumerate(zip(features[:3], values[:3])):
+            direction = directions[i] if i < len(directions) else "affects"
+            feat_display = feat.replace("_", " ")
+            if direction == "supports":
+                parts.append(f"{feat_display} (value: {val:.3f}) supports this prediction")
+            elif direction == "contradicts":
+                parts.append(f"{feat_display} (value: {val:.3f}) opposes this prediction")
+            else:
+                parts.append(f"{feat_display} (value: {val:.3f}) has neutral impact")
+        
+        factors_text = ", ".join(parts[:-1]) + f", and {parts[-1]}" if len(parts) > 1 else parts[0] if parts else "the input features"
+        
+        return (
+            f"The model predicts '{prediction}' based on several key factors. "
+            f"Specifically, {factors_text}. "
+            f"The combination of these factors leads the model to this conclusion."
+        )

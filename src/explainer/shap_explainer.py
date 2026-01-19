@@ -1,160 +1,218 @@
+"""
+SHAP Explainer implementation.
+
+SHAP (SHapley Additive exPlanations) uses game-theoretic Shapley values
+to explain individual predictions.
+"""
 import numpy as np
-import shap
+from typing import Dict, List, Optional
 import logging
-import pandas as pd
-from typing import Dict, List
+
 from .base import BaseExplainer
 
 logger = logging.getLogger(__name__)
 
+
 class SHAPExplainer(BaseExplainer):
-    def __init__(self, model, data, feature_names: list, model_type: str = "auto", verbose: bool = False):
+    """
+    SHAP-based explainer using TreeExplainer or KernelExplainer.
+    
+    For tree-based models (Random Forest, XGBoost, etc.), TreeExplainer
+    is used for exact Shapley values. For other models, KernelExplainer
+    provides model-agnostic approximations.
+    """
+    
+    def __init__(
+        self,
+        model,
+        data: np.ndarray,
+        feature_names: List[str],
+        model_type: str = "auto",
+        n_background_samples: int = 100,
+        verbose: bool = False
+    ):
+        """
+        Initialize SHAP explainer.
+        
+        Args:
+            model: Trained ML model
+            data: Training data for background distribution
+            feature_names: List of feature names
+            model_type: "tree", "kernel", or "auto" (auto-detect)
+            n_background_samples: Number of background samples for KernelExplainer
+            verbose: Whether to print debug information
+        """
         super().__init__(model, data, feature_names)
-        self.model_type = model_type  # "tree", "kernel", or "auto"
+        self.model_type = model_type
+        self.n_background_samples = n_background_samples
         self.verbose = verbose
+        self.explainer = None
+        self._base_value = None
+        
         self._init_explainer()
     
     def _init_explainer(self):
-        if self.model_type == "tree":
-            self.explainer = shap.TreeExplainer(self.model)
-        elif self.model_type == "kernel":
-            self.explainer = shap.KernelExplainer(
-                self.model.predict,
-                shap.sample(self.data, 100)
+        """Initialize the appropriate SHAP explainer."""
+        try:
+            import shap
+        except ImportError:
+            raise ImportError(
+                "SHAP library is required. Install with: pip install shap"
             )
+        
+        if self.model_type == "tree":
+            self._init_tree_explainer(shap)
+        elif self.model_type == "kernel":
+            self._init_kernel_explainer(shap)
         elif self.model_type == "auto":
+            # Try TreeExplainer first, fall back to KernelExplainer
             try:
-                self.explainer = shap.TreeExplainer(self.model)
+                self._init_tree_explainer(shap)
                 if self.verbose:
-                    logger.info("Using TreeExplainer")
+                    logger.info("Using TreeExplainer (auto-detected tree model)")
             except Exception as e:
                 if self.verbose:
-                    logger.warning(f"TreeExplainer failed: {e}. Falling back to KernelExplainer")
-                self.explainer = shap.KernelExplainer(
-                    self.model.predict,
-                    shap.sample(self.data, 100)
-                )
+                    logger.info(f"TreeExplainer failed ({e}), using KernelExplainer")
+                self._init_kernel_explainer(shap)
+        else:
+            raise ValueError(f"Unknown model_type: {self.model_type}")
     
-    def _process_shap_values(self, shap_values, instance_idx: int) -> np.ndarray:
-        """
-        Process SHAP values to handle different output shapes.
+    def _init_tree_explainer(self, shap):
+        """Initialize TreeExplainer for tree-based models."""
+        self.explainer = shap.TreeExplainer(self.model)
+        self._explainer_type = "tree"
         
-        SHAP can return:
-        - List[array]: Multiclass or binary case
-        - 3D array (n, features, classes): TreeExplainer binary classification
-        - 2D array (n, features): Standard case
+    def _init_kernel_explainer(self, shap):
+        """Initialize KernelExplainer for model-agnostic explanations."""
+        # Sample background data
+        if len(self.data) > self.n_background_samples:
+            background = shap.sample(self.data, self.n_background_samples)
+        else:
+            background = self.data
+            
+        self.explainer = shap.KernelExplainer(
+            self.model.predict_proba if hasattr(self.model, 'predict_proba') 
+            else self.model.predict,
+            background
+        )
+        self._explainer_type = "kernel"
+    
+    def _extract_shap_values(self, shap_values, instance_idx: int = 0) -> np.ndarray:
+        """
+        Extract SHAP values handling different output formats.
+        
+        SHAP can return values in various formats:
+        - List of arrays: [array_class0, array_class1] for binary classification
+        - 3D array: (n_samples, n_features, n_classes) for TreeExplainer
+        - 2D array: (n_samples, n_features) for regression/single output
+        
+        For classification, we use the positive class (index 1).
         
         Args:
             shap_values: Raw SHAP values from explainer
-            instance_idx: Index of instance to extract
+            instance_idx: Index of the instance to extract
             
         Returns:
             1D array of shape (n_features,)
         """
-        original_shape = None
-        
-        # log original shape for debugging
+        # Handle list format (binary classification)
         if isinstance(shap_values, list):
-            original_shape = f"List of {len(shap_values)} arrays, shapes: {[v.shape for v in shap_values]}"
-            if self.verbose:
-                logger.debug(f"SHAP values (list): {original_shape}")
-            
-            # for binary classification, use positive class (index 1)
-            shap_values = shap_values if len(shap_values) > 1 else shap_values
+            if len(shap_values) == 2:
+                # Binary classification: use positive class
+                shap_values = shap_values[1]
+            else:
+                # Multi-class: use the predicted class or first one
+                shap_values = shap_values[0]
         
-        if isinstance(shap_values, np.ndarray):
-            original_shape = shap_values.shape
-            if self.verbose:
-                logger.debug(f"SHAP values array shape: {original_shape}")
+        # Convert to numpy array if needed
+        shap_values = np.array(shap_values)
         
-        # extract values based on dimensionality
+        # Handle different dimensionalities
         if shap_values.ndim == 3:
-            # shape: (n_samples, n_features, 2) - TreeExplainer binary classification
-            if self.verbose:
-                logger.debug(f"Handling 3D array: extracting positive class (dim 2, index 1)")
-            result = shap_values[instance_idx, :, 1]
+            # (n_samples, n_features, n_classes) - use positive class
+            values = shap_values[instance_idx, :, 1] if shap_values.shape[2] == 2 else shap_values[instance_idx, :, 0]
         elif shap_values.ndim == 2:
-            # shape: (n_samples, n_features) - standard case
-            result = shap_values[instance_idx, :]
+            # (n_samples, n_features)
+            values = shap_values[instance_idx, :]
         elif shap_values.ndim == 1:
-            # shape: (n_features,) - single instance already
-            result = shap_values
+            # Already 1D (single instance)
+            values = shap_values
         else:
-            raise ValueError(
-                f"Unexpected SHAP values dimensionality: {shap_values.ndim}. "
-                f"Original shape info: {original_shape}"
-            )
+            raise ValueError(f"Unexpected SHAP values shape: {shap_values.shape}")
         
-        if self.verbose:
-            logger.debug(f"Final extracted values shape: {result.shape}")
-        
-        return result
+        return values.flatten()
     
     def explain(self, instance: np.ndarray) -> Dict[str, float]:
-        if self.verbose:
-            logger.info(f"Generating SHAP explanation for instance of shape {instance.shape}")
+        """
+        Generate SHAP explanation for a single instance.
         
+        Args:
+            instance: 1D array of feature values
+            
+        Returns:
+            Dictionary mapping feature names to SHAP values
+        """
+        # Ensure 2D shape for SHAP
         instance_2d = instance.reshape(1, -1)
+        
+        # Get SHAP values
         shap_values = self.explainer.shap_values(instance_2d)
         
-        # Process and reshape SHAP values
-        processed_values = self._process_shap_values(shap_values, 0)
+        # Extract values for this instance
+        values = self._extract_shap_values(shap_values, 0)
         
-        if self.verbose:
-            logger.debug(f"Processed values shape: {processed_values.shape}")
-        
+        # Create explanation dictionary
         explanation = {
-            self.feature_names[i]: float(processed_values[i])
+            self.feature_names[i]: float(values[i])
             for i in range(self.n_features)
         }
         
         if self.verbose:
-            top_features = sorted(explanation.items(), key=lambda x: abs(x), reverse=True)[:3]
-            logger.info(f"Top 3 features: {top_features}")
+            top_3 = sorted(explanation.items(), key=lambda x: abs(x[1]), reverse=True)[:3]
+            logger.info(f"Top 3 SHAP features: {top_3}")
         
         return explanation
     
     def explain_batch(self, instances: np.ndarray) -> List[Dict[str, float]]:
-        if self.verbose:
-            logger.info(f"Generating SHAP explanations for {len(instances)} instances")
+        """
+        Generate SHAP explanations for multiple instances.
         
+        Args:
+            instances: 2D array of shape (n_samples, n_features)
+            
+        Returns:
+            List of explanation dictionaries
+        """
         shap_values = self.explainer.shap_values(instances)
         
         explanations = []
         for i in range(len(instances)):
-            processed_values = self._process_shap_values(shap_values, i)
+            values = self._extract_shap_values(shap_values, i)
             explanation = {
-                self.feature_names[j]: float(processed_values[j])
+                self.feature_names[j]: float(values[j])
                 for j in range(self.n_features)
             }
             explanations.append(explanation)
         
-        if self.verbose:
-            logger.info(f"Successfully generated {len(explanations)} explanations")
-        
         return explanations
     
     def get_base_value(self) -> float:
+        """
+        Get the expected value (base value) from the explainer.
+        
+        For TreeExplainer, this is the mean prediction over the training data.
+        """
         base = self.explainer.expected_value
         
-        if self.verbose:
-            logger.debug(f"Base value type: {type(base)}, value: {base}")
-        
-        # handle list of base values (multiclass)
+        # Handle array/list of base values (multi-class)
         if isinstance(base, (list, np.ndarray)):
-            if len(base) == 1:
-                return float(base[0])
+            base = np.array(base)
+            if base.ndim == 0:
+                return float(base)
+            elif len(base) == 2:
+                # Binary classification: return positive class base value
+                return float(base[1])
             else:
-                if self.verbose:
-                    logger.debug(f"Multiple base values detected, selecting index 1: {base[1]}")
-                return float(base[1])  # choose positive class (index 1)
-
+                return float(base[0])
+        
         return float(base)
-
-    def explanation_to_dataframe(
-            self,
-            explanation: Dict[str, float],
-            instance: np.ndarray = None,
-            sort_by: str = "absolute"
-        ) -> pd.DataFrame:
-        return self._explanation_to_dataframe("SHAP", explanation=explanation, instance=instance, sort_by=sort_by)

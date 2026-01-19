@@ -4,8 +4,8 @@ from .cot_generator import ChainOfThoughtGenerator
 from .self_consistency_generator import SelfConsistencyGenerator
 
 __all__ = [
-    "BaseNLGGenerator",
-    "FewShotGenerator",
-    "ChainOfThoughtGenerator",
-    "SelfConsistencyGenerator",
+    'BaseNLGGenerator',
+    'FewShotGenerator',
+    'ChainOfThoughtGenerator', 
+    'SelfConsistencyGenerator'
 ]

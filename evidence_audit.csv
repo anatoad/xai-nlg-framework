@@ -1,4 +1,3 @@
-timestamp,statement,method,features,contributions,fidelity_score,validation_status
-2025-11-24T22:21:33.806834,The worst area (value: 0.07) strongly supports the prediction.,shap,[np.str_('worst area')],[0.06724261426271144],0.95,{}
-2025-11-24T22:21:33.806846,The worst concave points (value: 0.06) strongly supports the prediction.,shap,[np.str_('worst concave points')],[0.05740842121890832],0.95,{}
-2025-11-24T22:21:33.806849,The mean concave points (value: 0.04) strongly supports the prediction.,shap,[np.str_('mean concave points')],[0.04227830540602773],0.95,{}
+timestamp,instance_id,method,prediction,nlg_technique,top_feature_1,top_feature_2,top_feature_3,contribution_1,contribution_2,contribution_3,clarity_score,coverage_score,valid,text_preview
+2026-01-20T00:29:31.244342,instance_0,SHAP,1,self_consistency,worst area,worst concave points,mean concave points,0.06724261426271144,0.05740842121890832,0.04227830540602773,84.14516129032258,1.0,True,"The prediction of 1 is primarily driven by tumor characteristics, with the worst area being a key fa..."
+2026-01-20T00:29:31.244824,test_instance_0,SHAP,1,few_shot,worst area,worst concave points,mean concave points,0.06724261426271144,0.05740842121890832,0.04227830540602773,84.14516129032258,1.0,True,"The prediction of 1 is primarily driven by tumor characteristics, with the worst area being a key fa..."

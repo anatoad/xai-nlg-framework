@@ -1,5 +1,14 @@
-from typing import Dict, Any, Optional
+"""
+XAI-NLG Pipeline
+
+Main pipeline that combines all components:
+1. Explainer (SHAP/LIME) - generates feature contributions
+2. Normalizer & Mapper - processes and converts to statements
+3. NLG Generator - produces natural language explanations
+4. Validator - validates the explanations
+"""
 import numpy as np
+from typing import Dict, Any, Optional, List
 
 from config.settings import FrameworkConfig
 from src.explainer.shap_explainer import SHAPExplainer
@@ -9,232 +18,310 @@ from src.normalizer.mapper import FeatureMapper
 from src.nlg.few_shot_generator import FewShotGenerator
 from src.nlg.cot_generator import ChainOfThoughtGenerator
 from src.nlg.self_consistency_generator import SelfConsistencyGenerator
-from src.nlg.ollama_client import ollama_llm_call
-from src.validator.validator import XAIValidator
+from src.validator.validator import ExplanationValidator
 from src.validator.evidence_tracker import EvidenceTracker
-from src.utils import log_step
 
 
 class XAINLGPipeline:
-    """Main pipeline for XAI-to-NLG transformation."""
-
+    """
+    Main pipeline for transforming XAI explanations into natural language.
+    
+    Usage:
+        pipeline = XAINLGPipeline(model, X_train, feature_names)
+        result = pipeline.explain_instance(X_test[0], method="shap")
+        print(result["generated_text"])
+    """
+    
     def __init__(
         self,
         model,
-        data,
-        feature_names: list,
+        data: np.ndarray,
+        feature_names: List[str],
         config: Optional[FrameworkConfig] = None,
+        llm_call_fn=None
     ):
         """
-        Initialize pipeline.
-
+        Initialize the XAI-NLG pipeline.
+        
         Args:
-            model: Trained ML model (must implement .predict and optionally .predict_proba)
-            data: Training data (for SHAP/LIME background)
-            feature_names: Feature names in order
+            model: Trained ML model with predict/predict_proba methods
+            data: Training data for background (numpy array)
+            feature_names: List of feature names
             config: Framework configuration
+            llm_call_fn: Optional function to call LLM (prompt, config) -> str
         """
-        self.config = config or FrameworkConfig()
         self.model = model
-        self.data = data
-        self.feature_names = feature_names
-
+        self.data = np.array(data)
+        self.feature_names = list(feature_names)
+        self.config = config or FrameworkConfig()
+        self.llm_call_fn = llm_call_fn
+        
         self._init_components()
-
+    
     def _init_components(self):
-        # layer 1: explainers
-        self.shap_explainer = SHAPExplainer(
-            self.model, self.data, self.feature_names, model_type="auto"
-        )
-        self.lime_explainer = LIMEExplainer(
-            self.model, self.data, self.feature_names
-        )
-
-        # layer 2: normalizer & mapper
+        """Initialize all pipeline components."""
+        # Layer 1: Explainers
+        self._shap_explainer = None  # Lazy initialization
+        self._lime_explainer = None  # Lazy initialization
+        
+        # Layer 2: Normalizer & Mapper
         self.normalizer = Normalizer(self.config.normalizer)
         self.mapper = FeatureMapper()
-
-        # layer 3: NLG generators (Few-Shot, CoT, Self-Consistency)
-        # All of them use the same NLGConfig and the same Ollama client wrapper.
-        self.few_shot_generator = FewShotGenerator(
-            self.config.nlg,
-            llm_call_fn=ollama_llm_call,
-        )
-        self.cot_generator = ChainOfThoughtGenerator(
-            self.config.nlg,
-            llm_call_fn=ollama_llm_call,
-        )
-        self.sc_generator = SelfConsistencyGenerator(
-            self.config.nlg,
-            n_chains=3,
-            llm_call_fn=ollama_llm_call,
-        )
-
-        # layer 4: validator & evidence tracker
-        self.validator = XAIValidator(self.config.validator)
+        
+        # Layer 3: NLG Generators
+        self.generators = {
+            "few_shot": FewShotGenerator(self.config.nlg, self.llm_call_fn),
+            "cot": ChainOfThoughtGenerator(self.config.nlg, self.llm_call_fn),
+            "self_consistency": SelfConsistencyGenerator(self.config.nlg, self.llm_call_fn)
+        }
+        
+        # Layer 4: Validator & Evidence Tracker
+        self.validator = ExplanationValidator(self.config.validator)
         self.evidence_tracker = EvidenceTracker()
-
+    
+    @property
+    def shap_explainer(self) -> SHAPExplainer:
+        """Lazy initialization of SHAP explainer."""
+        if self._shap_explainer is None:
+            self._shap_explainer = SHAPExplainer(
+                self.model,
+                self.data,
+                self.feature_names,
+                model_type=self.config.explainer.shap_model_type,
+                n_background_samples=self.config.explainer.shap_n_samples,
+                verbose=self.config.verbose
+            )
+        return self._shap_explainer
+    
+    @property
+    def lime_explainer(self) -> LIMEExplainer:
+        """Lazy initialization of LIME explainer."""
+        if self._lime_explainer is None:
+            self._lime_explainer = LIMEExplainer(
+                self.model,
+                self.data,
+                self.feature_names,
+                n_samples=self.config.explainer.lime_n_samples,
+                verbose=self.config.verbose
+            )
+        return self._lime_explainer
+    
     def explain_instance(
         self,
         instance: np.ndarray,
         method: str = "shap",
-        generate_text: bool = True,
-        technique: Optional[str] = None,
+        technique: str = "few_shot",
         audience: str = "expert",
+        generate_text: bool = True,
+        instance_id: str = None,
+        track_evidence: bool = True
     ) -> Dict[str, Any]:
         """
-        Explain a single instance through the full pipeline.
-
+        Generate explanation for a single instance.
+        
         Args:
-            instance: 1D NumPy array with feature values
-            method: "shap" or "lime"
-            generate_text: Whether to generate natural language explanation
-            technique:
-                - "few_shot" (default)
-                - "cot"
-                - "self_consistency"
-            audience:
-                - "expert"  -> technical explanation (for Few-Shot)
-                - "layman"  -> simple explanation (for Few-Shot)
-                - "both"    -> expert + layman in one text (only Few-Shot supports this explicitly)
-
+            instance: 1D numpy array of feature values
+            method: XAI method - "shap" or "lime"
+            technique: NLG technique - "few_shot", "cot", or "self_consistency"
+            audience: Target audience - "expert", "layman", or "both"
+            generate_text: Whether to generate NLG text
+            instance_id: Optional instance identifier for tracking
+            track_evidence: Whether to track in evidence log
+            
         Returns:
-            Dictionary with:
-              - instance, method
-              - explanation (raw feature->value dict)
-              - base_value (SHAP expected value or 0.0 for LIME)
-              - prediction (raw model prediction)
-              - ranked_features (list of (feature, contribution))
-              - statements (mapped feature statements, if mapper supports it)
-              - generated_text (if generate_text=True)
-              - validation (clarity score, sum conservation, etc.)
-              - nlg_technique, nlg_generator (metadata)
+            Dictionary containing:
+                - prediction: Model prediction
+                - method: XAI method used
+                - contributions: Raw feature contributions
+                - ranked_features: Features sorted by importance
+                - statements: FeatureStatement objects
+                - generated_text: NLG explanation (if generate_text=True)
+                - validation: Validation results
         """
-        # ------------------ Layer 1: Explain ------------------ #
-        log_step(
-            "Layer 1: Generating explanations",
-            {"method": method},
-            self.config.verbose,
-        )
-
+        instance = np.array(instance).flatten()
+        
+        if self.config.verbose:
+            print(f"\n{'='*50}")
+            print(f"Explaining instance with {method.upper()}")
+            print(f"{'='*50}")
+        
+        # ============ LAYER 1: XAI Explanation ============
+        if self.config.verbose:
+            print("\n[Layer 1] Generating XAI explanation...")
+        
         if method.lower() == "shap":
-            explanation = self.shap_explainer.explain(instance)
+            contributions = self.shap_explainer.explain(instance)
             base_value = self.shap_explainer.get_base_value()
         elif method.lower() == "lime":
-            explanation = self.lime_explainer.explain(instance)
+            contributions = self.lime_explainer.explain(instance)
             base_value = 0.0
         else:
-            raise ValueError(f"Unsupported explanation method: {method}")
-
-        # model prediction
-        prediction = self.model.predict(instance.reshape(1, -1))[0]
-
-        # ------------------ Layer 2: Normalize & Map ------------------ #
-        log_step(
-            "Layer 2: Normalizing",
-            {"features": len(explanation)},
-            self.config.verbose,
+            raise ValueError(f"Unknown method: {method}. Use 'shap' or 'lime'.")
+        
+        # Get model prediction
+        pred = self.model.predict(instance.reshape(1, -1))[0]
+        if hasattr(self.model, 'predict_proba'):
+            proba = self.model.predict_proba(instance.reshape(1, -1))[0]
+            pred_proba = proba[1] if len(proba) == 2 else max(proba)
+        else:
+            pred_proba = float(pred)
+        
+        # ============ LAYER 2: Normalize & Map ============
+        if self.config.verbose:
+            print("[Layer 2] Normalizing and mapping features...")
+        
+        normalized = self.normalizer.normalize(contributions)
+        ranked_features = self.normalizer.rank_features(
+            contributions, 
+            top_k=self.config.explainer.top_k_features
         )
-
-        normalized = self.normalizer.normalize_contributions(explanation)
-        ranked = self.normalizer.rank_features(explanation)
-        statements = self.mapper.map_features(ranked, normalized)
-
-        result: Dict[str, Any] = {
+        statements = self.mapper.map_features(ranked_features, normalized)
+        
+        # Build result
+        result = {
             "instance": instance,
-            "method": method,
-            "explanation": explanation,
+            "prediction": int(pred),
+            "prediction_proba": pred_proba,
+            "method": method.upper(),
             "base_value": base_value,
-            "prediction": prediction,
-            "ranked_features": ranked,
-            "statements": statements,
+            "contributions": contributions,
+            "normalized": normalized,
+            "ranked_features": ranked_features,
+            "statements": statements
         }
-
-        # ------------------ Layer 3: NLG (optional) ------------------ #
+        
+        if self.config.verbose:
+            print(f"  Top {len(ranked_features)} features:")
+            for feat, val in ranked_features[:5]:
+                print(f"    - {feat}: {val:.4f}")
+        
+        # ============ LAYER 3: NLG Generation ============
         if generate_text:
-            # choose technique
-            tech = (technique or "").lower()
-            if not tech:
-                # default: first configured technique or 'few_shot'
-                tech = (
-                    self.config.nlg.techniques[0]
-                    if getattr(self.config.nlg, "techniques", None)
-                    else "few_shot"
-                )
-            tech = tech.lower()
-
-            if tech == "cot":
-                generator = self.cot_generator
-                generator_name = "cot"
-            elif tech in (
-                "self_consistency",
-                "self-consistency",
-                "selfconsistency",
-                "sc",
-            ):
-                generator = self.sc_generator
-                generator_name = "self_consistency"
-            else:
-                # fallback to Few-Shot
-                generator = self.few_shot_generator
-                generator_name = "few_shot"
-                tech = "few_shot"
-
-            log_step(
-                "Layer 3: Generating text",
-                {"generator": generator_name, "technique": tech, "audience": audience},
-                self.config.verbose,
+            if self.config.verbose:
+                print(f"[Layer 3] Generating text with {technique}...")
+            
+            # Build context for NLG
+            context = self.mapper.get_summary_context(
+                statements,
+                prediction=str(pred),
+                method=method.upper()
             )
-
-            # build context for NLG (top-k features)
-            k = self.config.explainer.top_k_features
-            top_k = ranked[:k]
-
-            directions = []
-            for _, v in top_k:
-                if v > 0:
-                    directions.append("supports")
-                elif v < 0:
-                    directions.append("contradicts")
-                else:
-                    directions.append("neutral")
-
-            context = {
-                "features": [f for f, _ in top_k],
-                "values": [float(v) for _, v in top_k],
-                "directions": directions,
-                "method": method,
-                # generic stringified prediction; for a specific dataset you can map this
-                # to domain-specific labels (e.g. 'benign tumor', 'malignant tumor').
-                "prediction": str(prediction),
-            }
-
-            # audience is mainly used by FewShotGenerator
-            if tech == "few_shot":
-                context["audience"] = audience
-
+            context["audience"] = audience
+            
+            # Get generator
+            generator = self.generators.get(technique, self.generators["few_shot"])
+            
+            # Generate text
             generated_text = generator.generate(context)
-
-            # ------------------ Layer 4: Validation ------------------ #
-            log_step(
-                "Layer 4: Validating",
-                {},
-                self.config.verbose,
-            )
-
-            validation = self.validator.validate_all(
-                explanation=explanation,
+            result["generated_text"] = generated_text
+            result["nlg_technique"] = technique
+            
+            if self.config.verbose:
+                print(f"  Generated text ({len(generated_text)} chars)")
+            
+            # ============ LAYER 4: Validation ============
+            if self.config.verbose:
+                print("[Layer 4] Validating explanation...")
+            
+            validation = self.validator.validate_explanation(
+                contributions=contributions,
                 generated_text=generated_text,
                 base_value=base_value,
-                prediction=float(prediction)
-                if isinstance(prediction, (float, int, np.floating))
-                else 0.0,
-                method=method.lower(),
+                prediction=pred_proba,
+                method=method
             )
-
-            result["generated_text"] = generated_text
             result["validation"] = validation
-            result["nlg_technique"] = tech
-            result["nlg_generator"] = generator_name
-
+            
+            if self.config.verbose:
+                print(f"  Clarity score: {validation['clarity']['score']:.1f}")
+                print(f"  Coverage score: {validation['coverage']['coverage_score']:.2f}")
+                print(f"  Valid: {validation['valid']}")
+            
+            # Track evidence
+            if track_evidence:
+                self.evidence_tracker.add_record(
+                    instance_id=instance_id or f"instance_{len(self.evidence_tracker.records)}",
+                    method=method,
+                    prediction=str(pred),
+                    contributions=contributions,
+                    generated_text=generated_text,
+                    nlg_technique=technique,
+                    validation_results=validation
+                )
+        
         return result
+    
+    def explain_batch(
+        self,
+        instances: np.ndarray,
+        method: str = "shap",
+        technique: str = "few_shot",
+        audience: str = "expert"
+    ) -> List[Dict[str, Any]]:
+        """
+        Generate explanations for multiple instances.
+        
+        Args:
+            instances: 2D numpy array (n_samples, n_features)
+            method: XAI method
+            technique: NLG technique
+            audience: Target audience
+            
+        Returns:
+            List of result dictionaries
+        """
+        results = []
+        for i, instance in enumerate(instances):
+            if self.config.verbose:
+                print(f"\nProcessing instance {i+1}/{len(instances)}")
+            
+            result = self.explain_instance(
+                instance,
+                method=method,
+                technique=technique,
+                audience=audience,
+                instance_id=f"batch_{i}"
+            )
+            results.append(result)
+        
+        return results
+    
+    def compare_methods(
+        self,
+        instance: np.ndarray,
+        technique: str = "few_shot"
+    ) -> Dict[str, Any]:
+        """
+        Compare SHAP and LIME explanations for the same instance.
+        
+        Args:
+            instance: 1D numpy array
+            technique: NLG technique to use
+            
+        Returns:
+            Dictionary with both explanations and comparison
+        """
+        shap_result = self.explain_instance(
+            instance, method="shap", technique=technique, track_evidence=False
+        )
+        lime_result = self.explain_instance(
+            instance, method="lime", technique=technique, track_evidence=False
+        )
+        
+        # Compare top features
+        shap_top = set(f for f, _ in shap_result["ranked_features"][:5])
+        lime_top = set(f for f, _ in lime_result["ranked_features"][:5])
+        
+        overlap = shap_top & lime_top
+        jaccard = len(overlap) / len(shap_top | lime_top) if (shap_top | lime_top) else 0
+        
+        return {
+            "shap": shap_result,
+            "lime": lime_result,
+            "comparison": {
+                "shap_top_5": list(shap_top),
+                "lime_top_5": list(lime_top),
+                "overlap": list(overlap),
+                "jaccard_similarity": jaccard
+            }
+        }

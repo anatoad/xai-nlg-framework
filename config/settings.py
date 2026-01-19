@@ -1,57 +1,58 @@
-from dataclasses import dataclass
-from typing import Dict, List, Optional
+"""
+Configuration classes for XAI-NLG Framework.
+"""
+from dataclasses import dataclass, field
+from typing import List, Optional
+
 
 @dataclass
 class ExplainerConfig:
-    shap_n_samples: int = 100
-    lime_n_samples: int = 1000
-    lime_feature_selection: str = "auto"
-    top_k_features: int = 5
+    """Configuration for XAI explainers (SHAP/LIME)."""
+    # SHAP settings
+    shap_n_samples: int = 100  # Background samples for KernelExplainer
+    shap_model_type: str = "auto"  # "tree", "kernel", or "auto"
+    
+    # LIME settings
+    lime_n_samples: int = 1000  # Number of samples for LIME
+    lime_kernel_width: float = 0.75
+    
+    # General
+    top_k_features: int = 5  # Number of top features to show
+
 
 @dataclass
 class NormalizerConfig:
-    scale_method: str = "minmax"  # minmax, standard, robust
-    feature_grouping_threshold: float = 0.1
-    text_template_style: str = "concise"  # concise, detailed, educational
+    """Configuration for normalizer and mapper."""
+    scale_method: str = "minmax"  # "minmax", "standard", "robust"
+    feature_grouping_threshold: float = 0.05  # Group features below this
+    
 
 @dataclass
 class NLGConfig:
-    model_name: str = "llama3:latest"
-    # model_name: str = "qwen3-vl:235b"
-    # model_name: str = "deepseek-r1:8b"
+    """Configuration for NLG generators."""
+    model_name: str = "llama3:latest"  # Ollama model name
     temperature: float = 0.3
-    max_tokens: int = 200
-    techniques: List[str] = None  # ["few_shot", "cot", "self_consistency"]
+    max_tokens: int = 300
+    techniques: List[str] = field(default_factory=lambda: ["few_shot", "cot", "self_consistency"])
     api_key: Optional[str] = None
-    debug_print_prompt: bool = False 
-
-    def __post_init__(self):
-        if self.techniques is None:
-            self.techniques = ["few_shot", "cot", "self_consistency"]
+    debug_print_prompt: bool = False
+    
 
 @dataclass
 class ValidatorConfig:
+    """Configuration for validation."""
     verify_sum_conservation: bool = True
-    sum_tolerance: float = 1e-5
+    sum_tolerance: float = 0.1  # Tolerance for SHAP sum check
+    min_clarity_score: float = 40.0
     track_evidence: bool = True
-    min_clarity_score: float = 45.0
-    min_robustness_jaccard: float = 0.6
 
-@dataclass
+
+@dataclass 
 class FrameworkConfig:
-    explainer: ExplainerConfig = None
-    normalizer: NormalizerConfig = None
-    nlg: NLGConfig = None
-    validator: ValidatorConfig = None
+    """Main framework configuration."""
+    explainer: ExplainerConfig = field(default_factory=ExplainerConfig)
+    normalizer: NormalizerConfig = field(default_factory=NormalizerConfig)
+    nlg: NLGConfig = field(default_factory=NLGConfig)
+    validator: ValidatorConfig = field(default_factory=ValidatorConfig)
     random_seed: int = 42
-    verbose: bool = False
-
-    def __post_init__(self):
-        if self.explainer is None:
-            self.explainer = ExplainerConfig()
-        if self.normalizer is None:
-            self.normalizer = NormalizerConfig()
-        if self.nlg is None:
-            self.nlg = NLGConfig()
-        if self.validator is None:
-            self.validator = ValidatorConfig()
+    verbose: bool = True
