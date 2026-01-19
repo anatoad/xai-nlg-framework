@@ -1,0 +1,80 @@
+
+XAI-NLG FRAMEWORK EVALUATION REPORT
+
+
+Timestamp: 2026-01-20T00:35:18.353624
+Total Instances Evaluated: 4
+
+Global metrics:
+------------------------------------------------------------
+
+fidelity_score:
+  Mean:   0.575
+  Median: 0.550
+  Std:    0.096
+  Range:  [0.500, 0.700]
+
+sign_match_score:
+  Mean:   0.150
+  Median: 0.100
+  Std:    0.191
+  Range:  [0.000, 0.400]
+
+clarity_score:
+  Mean:   92.671
+  Median: 92.872
+  Std:    0.623
+  Range:  [91.804, 93.135]
+
+coverage_topk:
+  Mean:   15.000
+  Median: 10.000
+  Std:    19.149
+  Range:  [0.000, 40.000]
+
+shap_conservation_error:
+  Mean:   0.040
+  Median: 0.040
+  Std:    0.046
+  Range:  [0.000, 0.080]
+
+shap_conservation_rate: 0.5
+
+
+Dataset results:
+------------------------------------------------------------
+
+dataset_breast_cancer:
+  count: 4
+  clarity_mean: 92.67065583021612
+  coverage_mean: 15.0
+  fidelity_mean: 0.575
+
+
+Tresholds and interpretation:
+------------------------------------------------------------
+
+Clarity Score (0-100):
+  - [45-100]: Good
+  - [60-100]: Very good
+  - [80-100]: Excellent
+
+Coverage Top-K (%):
+  - [80-100]: Good (features are mentioned)
+  - [60-80]:  Moderate (some features are missing)
+  - [<60]:    Weak (too few features)
+
+Fidelity Score (0-1):
+  - [0.8-1.0]: Good (correct signs)
+  - [0.6-0.8]: Moderate
+  - [<0.6]:   Weak
+
+SHAP Conservation:
+  - [100%]:   Perfect
+  - [95-100%]: Acceptable
+  - [<95%]:   Needs investigation
+
+Jaccard@K (robustness):
+  - [0.6-1.0]: Robust
+  - [0.4-0.6]: Moderate
+  - [<0.4]:   Unstable
