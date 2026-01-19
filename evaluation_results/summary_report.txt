@@ -1,0 +1,50 @@
+
+================================================================================
+                    XAI-NLG FRAMEWORK - EVALUATION SUMMARY
+================================================================================
+
+OVERVIEW
+--------
+Total evaluations: 60
+Successful evaluations: 60
+Failed evaluations: 0
+
+
+OVERALL METRICS
+---------------
+Clarity Score:  Mean=87.0, Std=6.7, Min=70.3, Max=97.6
+Coverage Score: Mean=91.3%, Std=19.3%
+Valid Rate:     71.7%
+
+
+BY XAI METHOD
+-------------
+      SHAP: Clarity=88.0, Coverage=91.3%, Valid=47%
+      LIME: Clarity=86.0, Coverage=91.3%, Valid=97%
+
+
+BY NLG TECHNIQUE
+----------------
+          few_shot: Clarity=84.8, Coverage=94.0%, Valid=75%
+               cot: Clarity=91.6, Coverage=81.0%, Valid=65%
+  self_consistency: Clarity=84.5, Coverage=99.0%, Valid=75%
+
+
+BY MODEL
+--------
+       random_forest: Clarity=87.0, Coverage=88.0%, Valid=93%
+   gradient_boosting: Clarity=86.9, Coverage=94.7%, Valid=50%
+
+
+BEST COMBINATIONS (by Clarity)
+------------------------------
+  SHAP + cot               : Clarity=93.9, Coverage=82.0%
+  LIME + cot               : Clarity=89.4, Coverage=80.0%
+  SHAP + few_shot          : Clarity=85.4, Coverage=94.0%
+  SHAP + self_consistency  : Clarity=84.6, Coverage=98.0%
+  LIME + self_consistency  : Clarity=84.3, Coverage=100.0%
+
+
+================================================================================
+                              END OF REPORT
+================================================================================
