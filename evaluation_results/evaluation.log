@@ -1,0 +1,968 @@
+2026-01-20 01:57:32,707 - INFO - ======================================================================
+2026-01-20 01:57:32,708 - INFO - XAI-NLG FRAMEWORK - COMPREHENSIVE EVALUATION (OPTIMIZED)
+2026-01-20 01:57:32,708 - INFO - Started at: 2026-01-20 01:57:32
+2026-01-20 01:57:32,708 - INFO - ======================================================================
+2026-01-20 01:57:32,708 - INFO - Loading Breast Cancer dataset...
+2026-01-20 01:57:32,751 - INFO - Dataset loaded: 398 training, 171 test samples
+2026-01-20 01:57:32,755 - INFO - Features: 30, Classes: 2
+2026-01-20 01:57:32,755 - INFO - Training Random Forest...
+2026-01-20 01:57:32,927 - INFO -   Random Forest - Train Acc: 1.000
+2026-01-20 01:57:32,928 - INFO - Training XGBoost...
+2026-01-20 01:57:34,055 - INFO -   XGBoost - Train Acc: 1.000
+2026-01-20 01:57:34,056 - INFO - 
+Total evaluations planned: 120
+2026-01-20 01:57:34,056 - INFO - Models: ['RandomForest', 'XGBoost']
+2026-01-20 01:57:34,057 - INFO - XAI Methods: ['shap', 'lime']
+2026-01-20 01:57:34,057 - INFO - NLG Techniques: ['few_shot', 'cot', 'self_consistency']
+2026-01-20 01:57:34,057 - INFO - Instances per combination: 10
+2026-01-20 01:57:34,057 - INFO - 
+============================================================
+2026-01-20 01:57:34,058 - INFO - MODEL: RandomForest
+2026-01-20 01:57:34,058 - INFO - ============================================================
+2026-01-20 01:57:34,058 - INFO - 
+  [SHAP] + [few_shot]
+2026-01-20 01:57:54,782 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:57:57,125 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:57:59,747 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:01,990 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:02,596 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:04,942 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:07,295 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:09,392 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:11,610 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:13,844 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:13,848 - INFO -     Summary: Clarity=87.6, Coverage=90%, Valid=100%
+2026-01-20 01:58:13,849 - INFO - 
+  [SHAP] + [cot]
+2026-01-20 01:58:20,607 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:25,880 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:32,315 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:36,482 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:42,998 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:48,466 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:58:54,655 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:00,654 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:03,446 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:09,664 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:09,667 - INFO -     Summary: Clarity=87.4, Coverage=96%, Valid=100%
+2026-01-20 01:59:09,668 - INFO - 
+  [SHAP] + [self_consistency]
+2026-01-20 01:59:12,262 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:14,950 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:17,244 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:20,168 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:22,432 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:24,672 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:27,177 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:30,439 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:32,974 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:33,793 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:36,512 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:39,710 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:41,742 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:44,109 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:46,302 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:48,925 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:51,325 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:53,930 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:55,849 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 01:59:58,625 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:00,708 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:02,506 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:05,037 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:07,060 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:09,453 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:11,458 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:13,933 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:17,088 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:19,484 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:21,482 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:23,713 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:26,165 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:27,873 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:30,375 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:32,666 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:35,489 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:37,188 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:37,811 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:39,948 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:42,258 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:42,262 - INFO -     Summary: Clarity=83.1, Coverage=98%, Valid=100%
+2026-01-20 02:00:42,263 - INFO - 
+  [LIME] + [few_shot]
+2026-01-20 02:00:45,215 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:47,833 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:50,366 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:52,618 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:55,111 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:57,555 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:00:59,911 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:02,491 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:04,753 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:06,985 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:06,988 - INFO -     Summary: Clarity=86.8, Coverage=100%, Valid=100%
+2026-01-20 02:01:06,989 - INFO - 
+  [LIME] + [cot]
+2026-01-20 02:01:12,510 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:18,541 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:25,014 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:31,024 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:36,871 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:42,302 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:47,853 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:54,154 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:01:59,817 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:05,042 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:05,046 - INFO -     Summary: Clarity=87.5, Coverage=96%, Valid=100%
+2026-01-20 02:02:05,047 - INFO - 
+  [LIME] + [self_consistency]
+2026-01-20 02:02:07,166 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:09,269 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:10,697 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:12,868 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:14,949 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:16,930 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:19,367 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:21,785 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:23,691 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:25,716 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:27,974 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:30,271 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:32,296 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:34,405 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:36,779 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:39,216 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:41,009 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:42,409 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:44,276 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:46,579 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:49,121 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:51,249 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:53,279 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:55,723 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:02:57,996 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:00,414 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:02,537 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:05,068 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:06,904 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:08,999 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:11,404 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:13,073 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:15,663 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:18,331 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:20,182 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:23,169 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:25,321 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:27,535 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:29,499 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:31,739 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:31,742 - INFO -     Summary: Clarity=87.3, Coverage=100%, Valid=100%
+2026-01-20 02:03:31,744 - INFO - 
+============================================================
+2026-01-20 02:03:31,745 - INFO - MODEL: XGBoost
+2026-01-20 02:03:31,745 - INFO - ============================================================
+2026-01-20 02:03:31,746 - INFO - 
+  [SHAP] + [few_shot]
+2026-01-20 02:03:31,843 - INFO - num_full_subsets = 1
+2026-01-20 02:03:31,845 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:31,845 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:31,869 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:31,904 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:31,905 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:03:31,968 - INFO - phi = array([ 0.        ,  0.00985633,  0.        ,  0.        ,  0.02540952,
+        0.        ,  0.        ,  0.03263858,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.03046299,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.13408483,  0.01973127, -0.0192809 ,  0.01786124,
+        0.        ,  0.03628774,  0.36407374,  0.        ,  0.        ])
+2026-01-20 02:03:31,969 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:31,969 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:03:31,972 - INFO - phi = array([ 0.        , -0.00985633,  0.        ,  0.        , -0.02540952,
+        0.        ,  0.        , -0.03263858,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.03046299,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        , -0.13408484, -0.01973127,  0.01928089, -0.01786125,
+        0.        , -0.03628774, -0.36407374,  0.        ,  0.        ])
+2026-01-20 02:03:34,366 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:34,413 - INFO - num_full_subsets = 1
+2026-01-20 02:03:34,415 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:34,416 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:34,437 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:34,461 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:34,462 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:34,468 - INFO - phi = array([ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        , -0.02155821,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.01028255,  0.        ,
+        0.        ,  0.        ,  0.        , -0.00633468, -0.00342597,
+       -0.05748026,  0.        , -0.02573463, -0.06710467, -0.00212329,
+        0.        , -0.04325681, -0.12744828,  0.        ,  0.        ])
+2026-01-20 02:03:34,469 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:34,470 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:34,475 - INFO - phi = array([0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.02155821, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.01028255, 0.        ,
+       0.        , 0.        , 0.        , 0.00633468, 0.00342597,
+       0.05748026, 0.        , 0.02573463, 0.06710467, 0.00212329,
+       0.        , 0.04325681, 0.12744828, 0.        , 0.        ])
+2026-01-20 02:03:36,669 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:36,725 - INFO - num_full_subsets = 1
+2026-01-20 02:03:36,726 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:36,727 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:36,746 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:36,768 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:36,771 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:36,774 - INFO - phi = array([ 0.        ,  0.        , -0.00311842,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.03691474,  0.        ,
+        0.        ,  0.        ,  0.        , -0.00835141,  0.        ,
+       -0.0494142 , -0.07091202, -0.02966499, -0.10525116,  0.        ,
+        0.        , -0.02760845, -0.08874486, -0.00237051,  0.        ])
+2026-01-20 02:03:36,776 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:36,777 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:36,780 - INFO - phi = array([ 0.        ,  0.        ,  0.00311842,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.03691474,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.00835141,  0.        ,
+        0.0494142 ,  0.07091202,  0.02966499,  0.10525116,  0.        ,
+        0.        ,  0.02760845,  0.08874486,  0.00237051,  0.        ])
+2026-01-20 02:03:39,017 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:39,061 - INFO - num_full_subsets = 1
+2026-01-20 02:03:39,062 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:39,063 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:39,083 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:39,105 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:39,106 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:03:39,109 - INFO - phi = array([0.        , 0.        , 0.        , 0.        , 0.02393591,
+       0.        , 0.        , 0.03072792, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.05511432, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.07194805, 0.05335981, 0.02920771, 0.08805803, 0.01887567,
+       0.        , 0.04705896, 0.19827475, 0.        , 0.        ])
+2026-01-20 02:03:39,110 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:39,110 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:03:39,113 - INFO - phi = array([ 0.        ,  0.        ,  0.        ,  0.        , -0.02393591,
+        0.        ,  0.        , -0.03072792,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.05511433,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.07194805, -0.05335981, -0.02920772, -0.08805804, -0.01887567,
+        0.        , -0.04705896, -0.19827475,  0.        ,  0.        ])
+2026-01-20 02:03:41,571 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:41,635 - INFO - num_full_subsets = 1
+2026-01-20 02:03:41,637 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:41,638 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:41,659 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:41,678 - INFO - np.sum(w_aug) = np.float64(30.000000000000014)
+2026-01-20 02:03:41,681 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:41,686 - INFO - phi = array([ 0.        ,  0.02577319,  0.        ,  0.        ,  0.02047656,
+        0.        ,  0.        ,  0.05212687,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.06424362,  0.        ,
+       -0.02481259,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.04479778,  0.06115729,  0.04109487,  0.0465357 ,  0.        ,
+        0.        ,  0.05661855,  0.        ,  0.        ,  0.        ])
+2026-01-20 02:03:41,687 - INFO - np.sum(w_aug) = np.float64(30.000000000000014)
+2026-01-20 02:03:41,688 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:41,692 - INFO - phi = array([ 0.        , -0.02577319,  0.        ,  0.        , -0.02047656,
+        0.        ,  0.        , -0.05212687,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.06424362,  0.        ,
+        0.02481259,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.04479778, -0.06115729, -0.04109487, -0.0465357 ,  0.        ,
+        0.        , -0.05661855,  0.        ,  0.        ,  0.        ])
+2026-01-20 02:03:44,230 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:44,278 - INFO - num_full_subsets = 1
+2026-01-20 02:03:44,279 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:44,280 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:44,298 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:44,318 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:44,318 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:03:44,321 - INFO - phi = array([0.        , 0.018193  , 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.03272576, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.02220743, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.05184737, 0.08325755, 0.03127631, 0.05981773, 0.01957426,
+       0.        , 0.05933805, 0.2381957 , 0.        , 0.        ])
+2026-01-20 02:03:44,322 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:44,322 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:03:44,326 - INFO - phi = array([ 0.        , -0.018193  ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        , -0.03272576,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.02220743,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.05184737, -0.08325755, -0.03127631, -0.05981773, -0.01957426,
+        0.        , -0.05933805, -0.2381957 ,  0.        ,  0.        ])
+2026-01-20 02:03:45,949 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:46,021 - INFO - num_full_subsets = 1
+2026-01-20 02:03:46,022 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:46,023 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:46,043 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:46,067 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:46,070 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:46,073 - INFO - phi = array([ 0.        , -0.02323424,  0.        ,  0.        ,  0.        ,
+        0.        , -0.00712654, -0.0224138 ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.0387643 ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.0414616 , -0.05230226, -0.02374098, -0.05846635,  0.        ,
+        0.        , -0.03929407, -0.0722967 ,  0.        ,  0.        ])
+2026-01-20 02:03:46,074 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:46,075 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:46,079 - INFO - phi = array([0.        , 0.02323424, 0.        , 0.        , 0.        ,
+       0.        , 0.00712654, 0.0224138 , 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.0387643 , 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.0414616 , 0.05230226, 0.02374098, 0.05846635, 0.        ,
+       0.        , 0.03929407, 0.0722967 , 0.        , 0.        ])
+2026-01-20 02:03:48,177 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:48,234 - INFO - num_full_subsets = 1
+2026-01-20 02:03:48,235 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:48,236 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:48,261 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:48,292 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:48,293 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:03:48,297 - INFO - phi = array([0.        , 0.01483815, 0.        , 0.        , 0.01811815,
+       0.        , 0.        , 0.03159088, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.07098158, 0.08598672, 0.02908905, 0.09772146, 0.        ,
+       0.        , 0.06797483, 0.18737539, 0.01116437, 0.        ])
+2026-01-20 02:03:48,298 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:48,299 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:03:48,303 - INFO - phi = array([ 0.        , -0.01483815,  0.        ,  0.        , -0.01811815,
+        0.        ,  0.        , -0.03159088,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.07098157, -0.08598672, -0.02908905, -0.09772146,  0.        ,
+        0.        , -0.06797483, -0.18737539, -0.01116437,  0.        ])
+2026-01-20 02:03:50,763 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:50,835 - INFO - num_full_subsets = 1
+2026-01-20 02:03:50,836 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:50,837 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:50,856 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:50,874 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:50,875 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:03:50,883 - INFO - phi = array([-0.00684313, -0.01162564,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        , -0.01513837,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.03772757,  0.        ,
+       -0.00465164,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.06534663, -0.05444896, -0.03094646, -0.08397519,  0.        ,
+        0.        ,  0.        , -0.06778506,  0.        ,  0.        ])
+2026-01-20 02:03:50,884 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:50,885 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:03:50,888 - INFO - phi = array([0.00684313, 0.01162564, 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.01513837, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.03772757, 0.        ,
+       0.00465164, 0.        , 0.        , 0.        , 0.        ,
+       0.06534663, 0.05444896, 0.03094646, 0.08397519, 0.        ,
+       0.        , 0.        , 0.06778506, 0.        , 0.        ])
+2026-01-20 02:03:53,004 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:53,054 - INFO - num_full_subsets = 1
+2026-01-20 02:03:53,055 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:53,056 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:53,075 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:53,095 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:03:53,096 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:53,099 - INFO - phi = array([0.        , 0.        , 0.        , 0.        , 0.02401802,
+       0.        , 0.        , 0.03744447, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.0642927 , 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.07047812, 0.03114793, 0.03741522, 0.10042994, 0.02119496,
+       0.        , 0.05365359, 0.17605577, 0.        , 0.        ])
+2026-01-20 02:03:53,101 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:03:53,101 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:03:53,105 - INFO - phi = array([ 0.        ,  0.        ,  0.        ,  0.        , -0.02401802,
+        0.        ,  0.        , -0.03744447,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.0642927 ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.07047812, -0.03114793, -0.03741522, -0.10042994, -0.02119496,
+        0.        , -0.05365359, -0.17605577,  0.        ,  0.        ])
+2026-01-20 02:03:55,530 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:03:55,533 - INFO -     Summary: Clarity=84.1, Coverage=100%, Valid=100%
+2026-01-20 02:03:55,535 - INFO - 
+  [SHAP] + [cot]
+2026-01-20 02:03:55,577 - INFO - num_full_subsets = 1
+2026-01-20 02:03:55,578 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:03:55,579 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:03:55,601 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:03:55,621 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:55,622 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:03:55,625 - INFO - phi = array([ 0.        ,  0.00879039,  0.        ,  0.        ,  0.02391644,
+        0.        ,  0.        ,  0.0326892 ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.02911043,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.13200122,  0.01684297, -0.02053167,  0.02134192,
+        0.        ,  0.03977776,  0.36448158,  0.        ,  0.        ])
+2026-01-20 02:03:55,626 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:03:55,627 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:03:55,629 - INFO - phi = array([ 0.        , -0.00879039,  0.        ,  0.        , -0.02391644,
+        0.        ,  0.        , -0.0326892 ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.02911043,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        , -0.13200123, -0.01684297,  0.02053166, -0.02134192,
+        0.        , -0.03977777, -0.36448158,  0.        ,  0.        ])
+2026-01-20 02:04:01,471 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:01,525 - INFO - num_full_subsets = 1
+2026-01-20 02:04:01,526 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:01,527 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:01,549 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:01,586 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:01,588 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:01,594 - INFO - phi = array([-0.00175653,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.0027446 ,  0.        , -0.02331252,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.01797309,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        , -0.0027106 ,
+       -0.05989138,  0.        , -0.03109185, -0.06214766,  0.        ,
+        0.        , -0.03704779, -0.12607336,  0.        ,  0.        ])
+2026-01-20 02:04:01,595 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:01,595 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:01,598 - INFO - phi = array([0.00175653, 0.        , 0.        , 0.        , 0.        ,
+       0.0027446 , 0.        , 0.02331252, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.01797309, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.0027106 ,
+       0.05989137, 0.        , 0.03109185, 0.06214766, 0.        ,
+       0.        , 0.03704779, 0.12607336, 0.        , 0.        ])
+2026-01-20 02:04:06,140 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:06,203 - INFO - num_full_subsets = 1
+2026-01-20 02:04:06,204 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:06,205 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:06,226 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:06,247 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:06,248 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:04:06,251 - INFO - phi = array([ 0.        ,  0.        , -0.00239126,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.03424665,  0.        ,
+        0.        ,  0.        ,  0.        , -0.00515905,  0.        ,
+       -0.04953079, -0.07103022, -0.03044772, -0.10410226,  0.        ,
+        0.        , -0.02594664, -0.08588703, -0.00827295,  0.        ])
+2026-01-20 02:04:06,252 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:06,252 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:04:06,257 - INFO - phi = array([ 0.        ,  0.        ,  0.00239126,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.03424665,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.00515905,  0.        ,
+        0.04953079,  0.07103022,  0.03044772,  0.10410226,  0.        ,
+        0.        ,  0.02594664,  0.08588703,  0.00827295,  0.        ])
+2026-01-20 02:04:12,391 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:12,447 - INFO - num_full_subsets = 1
+2026-01-20 02:04:12,448 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:12,449 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:12,470 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:12,507 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:04:12,508 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:12,514 - INFO - phi = array([0.        , 0.02226652, 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.0338821 , 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.05250088, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.06903738, 0.0513747 , 0.03148112, 0.09478212, 0.02169163,
+       0.        , 0.04683655, 0.19270814, 0.        , 0.        ])
+2026-01-20 02:04:12,516 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:04:12,517 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:12,523 - INFO - phi = array([ 0.        , -0.02226652,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        , -0.0338821 ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.05250089,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.06903738, -0.0513747 , -0.03148112, -0.09478213, -0.02169163,
+        0.        , -0.04683655, -0.19270815,  0.        ,  0.        ])
+2026-01-20 02:04:17,981 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:18,055 - INFO - num_full_subsets = 1
+2026-01-20 02:04:18,056 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:18,057 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:18,074 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:18,094 - INFO - np.sum(w_aug) = np.float64(30.000000000000014)
+2026-01-20 02:04:18,094 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:04:18,097 - INFO - phi = array([ 0.        ,  0.02598077,  0.        ,  0.        ,  0.0164396 ,
+        0.        ,  0.        ,  0.05272548,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.0685817 ,  0.        ,
+       -0.02604029,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.04409232,  0.05973291,  0.04142507,  0.04863656,  0.        ,
+        0.        ,  0.05502679,  0.        ,  0.        ,  0.        ])
+2026-01-20 02:04:18,098 - INFO - np.sum(w_aug) = np.float64(30.000000000000014)
+2026-01-20 02:04:18,098 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:04:18,101 - INFO - phi = array([ 0.        , -0.02598077,  0.        ,  0.        , -0.0164396 ,
+        0.        ,  0.        , -0.05272548,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.0685817 ,  0.        ,
+        0.02604029,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.04409232, -0.05973291, -0.04142507, -0.04863656,  0.        ,
+        0.        , -0.05502679,  0.        ,  0.        ,  0.        ])
+2026-01-20 02:04:23,665 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:23,736 - INFO - num_full_subsets = 1
+2026-01-20 02:04:23,737 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:23,738 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:23,757 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:23,783 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:04:23,784 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:04:23,789 - INFO - phi = array([0.        , 0.02216409, 0.        , 0.        , 0.02650052,
+       0.        , 0.        , 0.03495383, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.02808916, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.05587112, 0.07121862, 0.        , 0.05219308, 0.03225913,
+       0.        , 0.06508155, 0.22810207, 0.        , 0.        ])
+2026-01-20 02:04:23,790 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:04:23,790 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:04:23,793 - INFO - phi = array([ 0.        , -0.02216409,  0.        ,  0.        , -0.02650052,
+        0.        ,  0.        , -0.03495383,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.02808916,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.05587112, -0.07121862,  0.        , -0.05219308, -0.03225913,
+        0.        , -0.06508155, -0.22810207,  0.        ,  0.        ])
+2026-01-20 02:04:29,598 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:29,659 - INFO - num_full_subsets = 1
+2026-01-20 02:04:29,661 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:29,662 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:29,679 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:29,701 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:29,701 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:04:29,704 - INFO - phi = array([ 0.        , -0.02514536,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        , -0.0193681 ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.04489351, -0.0061008 ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.03543155, -0.05915437, -0.02560524, -0.05898809,  0.        ,
+        0.        , -0.03805132, -0.0663625 ,  0.        ,  0.        ])
+2026-01-20 02:04:29,705 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:29,705 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:04:29,709 - INFO - phi = array([0.        , 0.02514536, 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.0193681 , 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.04489351, 0.0061008 ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.03543155, 0.05915437, 0.02560524, 0.05898809, 0.        ,
+       0.        , 0.03805132, 0.0663625 , 0.        , 0.        ])
+2026-01-20 02:04:35,153 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:35,205 - INFO - num_full_subsets = 1
+2026-01-20 02:04:35,207 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:35,207 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:35,226 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:35,247 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:35,247 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:35,252 - INFO - phi = array([0.        , 0.01781177, 0.        , 0.        , 0.01619015,
+       0.        , 0.        , 0.02531779, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.07435301, 0.08716272, 0.02564321, 0.10059579, 0.01745603,
+       0.        , 0.07083757, 0.17947255, 0.        , 0.        ])
+2026-01-20 02:04:35,253 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:35,254 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:35,257 - INFO - phi = array([ 0.        , -0.01781176,  0.        ,  0.        , -0.01619015,
+        0.        ,  0.        , -0.02531778,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.07435301, -0.08716272, -0.0256432 , -0.10059579, -0.01745603,
+        0.        , -0.07083757, -0.17947255,  0.        ,  0.        ])
+2026-01-20 02:04:40,846 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:40,913 - INFO - num_full_subsets = 1
+2026-01-20 02:04:40,914 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:40,915 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:40,944 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:40,980 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:40,984 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:40,989 - INFO - phi = array([ 0.        , -0.01109707,  0.        ,  0.        ,  0.        ,
+       -0.00600019,  0.        , -0.01651956,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.03713744,  0.        ,
+        0.        ,  0.        ,  0.        , -0.00465223,  0.        ,
+       -0.06504462, -0.05604765, -0.03260605, -0.07995675,  0.        ,
+        0.        ,  0.        , -0.06942709,  0.        ,  0.        ])
+2026-01-20 02:04:40,990 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:40,990 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:40,993 - INFO - phi = array([0.        , 0.01109707, 0.        , 0.        , 0.        ,
+       0.00600019, 0.        , 0.01651956, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.03713744, 0.        ,
+       0.        , 0.        , 0.        , 0.00465223, 0.        ,
+       0.06504462, 0.05604765, 0.03260605, 0.07995675, 0.        ,
+       0.        , 0.        , 0.06942708, 0.        , 0.        ])
+2026-01-20 02:04:45,514 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:45,567 - INFO - num_full_subsets = 1
+2026-01-20 02:04:45,569 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:45,569 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:45,590 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:45,611 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:45,612 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:45,617 - INFO - phi = array([0.        , 0.02678003, 0.        , 0.        , 0.02408535,
+       0.        , 0.        , 0.04303142, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.06058283, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.06504203, 0.03561509, 0.03928324, 0.10666261, 0.        ,
+       0.        , 0.04894163, 0.1661065 , 0.        , 0.        ])
+2026-01-20 02:04:45,618 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:45,619 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:04:45,623 - INFO - phi = array([ 0.        , -0.02678003,  0.        ,  0.        , -0.02408535,
+        0.        ,  0.        , -0.04303142,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.06058283,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.06504204, -0.03561509, -0.03928324, -0.10666261,  0.        ,
+        0.        , -0.04894163, -0.1661065 ,  0.        ,  0.        ])
+2026-01-20 02:04:51,224 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:51,226 - INFO -     Summary: Clarity=89.9, Coverage=100%, Valid=100%
+2026-01-20 02:04:51,227 - INFO - 
+  [SHAP] + [self_consistency]
+2026-01-20 02:04:51,299 - INFO - num_full_subsets = 1
+2026-01-20 02:04:51,301 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:04:51,301 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:04:51,323 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:04:51,344 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:51,345 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:04:51,349 - INFO - phi = array([ 0.        ,  0.00812586,  0.        ,  0.        ,  0.02349974,
+        0.        ,  0.        ,  0.03123608,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.02859659,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.1326999 ,  0.02033651, -0.02120182,  0.02277312,
+        0.        ,  0.04011005,  0.36121651,  0.        ,  0.        ])
+2026-01-20 02:04:51,350 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:04:51,351 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:04:51,353 - INFO - phi = array([ 0.        , -0.00812586,  0.        ,  0.        , -0.02349974,
+        0.        ,  0.        , -0.03123609,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.02859659,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        , -0.13269991, -0.02033652,  0.02120181, -0.02277313,
+        0.        , -0.04011005, -0.36121651,  0.        ,  0.        ])
+2026-01-20 02:04:53,451 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:55,671 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:04:58,037 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:00,860 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:00,936 - INFO - num_full_subsets = 1
+2026-01-20 02:05:00,938 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:05:00,939 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:05:00,958 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:05:00,981 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:05:00,983 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:05:00,988 - INFO - phi = array([-0.00098424,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        , -0.02167516,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.01520267,  0.        ,
+        0.        ,  0.        ,  0.        , -0.00138842, -0.00129847,
+       -0.06517203,  0.        , -0.0273665 , -0.06581475,  0.        ,
+        0.        , -0.03959757, -0.12624954,  0.        ,  0.        ])
+2026-01-20 02:05:00,990 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:05:00,990 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:05:00,993 - INFO - phi = array([0.00098424, 0.        , 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.02167516, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.01520267, 0.        ,
+       0.        , 0.        , 0.        , 0.00138842, 0.00129847,
+       0.06517203, 0.        , 0.0273665 , 0.06581475, 0.        ,
+       0.        , 0.03959757, 0.12624954, 0.        , 0.        ])
+2026-01-20 02:05:03,259 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:05,839 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:08,583 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:11,925 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:11,990 - INFO - num_full_subsets = 1
+2026-01-20 02:05:11,993 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:05:11,994 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:05:12,019 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:05:12,044 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:12,046 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:05:12,049 - INFO - phi = array([ 0.        ,  0.        , -0.00294357,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.0323348 ,  0.        ,
+       -0.00172921,  0.        ,  0.        , -0.00534849,  0.        ,
+       -0.051073  , -0.07499492, -0.0272817 , -0.10427068,  0.        ,
+        0.        , -0.0269088 , -0.08630571,  0.        ,  0.        ])
+2026-01-20 02:05:12,050 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:12,051 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:05:12,054 - INFO - phi = array([ 0.        ,  0.        ,  0.00294357,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.0323348 ,  0.        ,
+        0.00172921,  0.        ,  0.        ,  0.00534849,  0.        ,
+        0.051073  ,  0.07499492,  0.0272817 ,  0.10427068,  0.        ,
+        0.        ,  0.0269088 ,  0.08630571,  0.        ,  0.        ])
+2026-01-20 02:05:13,860 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:15,694 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:17,595 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:19,529 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:19,593 - INFO - num_full_subsets = 1
+2026-01-20 02:05:19,594 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:05:19,595 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:05:19,615 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:05:19,652 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:19,654 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:05:19,657 - INFO - phi = array([0.        , 0.02372359, 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.02382666, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.05146901, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.07231621, 0.05576851, 0.03911485, 0.09056985, 0.01841773,
+       0.        , 0.04857989, 0.19277481, 0.        , 0.        ])
+2026-01-20 02:05:19,659 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:19,659 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:05:19,662 - INFO - phi = array([ 0.        , -0.02372359,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        , -0.02382667,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.05146901,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.07231621, -0.05576852, -0.03911486, -0.09056985, -0.01841773,
+        0.        , -0.0485799 , -0.19277482,  0.        ,  0.        ])
+2026-01-20 02:05:21,263 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:23,385 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:25,633 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:28,536 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:28,634 - INFO - num_full_subsets = 1
+2026-01-20 02:05:28,635 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:05:28,635 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:05:28,655 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:05:28,686 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:28,687 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:05:28,693 - INFO - phi = array([ 0.        ,  0.02580831,  0.        ,  0.        ,  0.01648571,
+        0.        ,  0.        ,  0.05286353,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.06481756,  0.        ,
+       -0.02680139,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.042978  ,  0.05743181,  0.04599205,  0.04875026,  0.        ,
+        0.        ,  0.05604644,  0.        ,  0.        ,  0.        ])
+2026-01-20 02:05:28,694 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:28,695 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:05:28,699 - INFO - phi = array([ 0.        , -0.02580831,  0.        ,  0.        , -0.01648571,
+        0.        ,  0.        , -0.05286353,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.06481756,  0.        ,
+        0.02680139,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.04297799, -0.05743181, -0.04599205, -0.04875026,  0.        ,
+        0.        , -0.05604644,  0.        ,  0.        ,  0.        ])
+2026-01-20 02:05:30,685 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:32,703 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:34,825 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:37,329 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:37,388 - INFO - num_full_subsets = 1
+2026-01-20 02:05:37,389 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:05:37,390 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:05:37,413 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:05:37,460 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:05:37,460 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:05:37,463 - INFO - phi = array([0.        , 0.        , 0.        , 0.        , 0.02755612,
+       0.        , 0.        , 0.0428972 , 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.02340323, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.04118705, 0.07665796, 0.03041555, 0.04252775, 0.02394521,
+       0.        , 0.05617526, 0.25166784, 0.        , 0.        ])
+2026-01-20 02:05:37,465 - INFO - np.sum(w_aug) = np.float64(30.00000000000001)
+2026-01-20 02:05:37,465 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:05:37,468 - INFO - phi = array([ 0.        ,  0.        ,  0.        ,  0.        , -0.02755612,
+        0.        ,  0.        , -0.0428972 ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.02340323,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.04118705, -0.07665796, -0.03041555, -0.04252775, -0.02394521,
+        0.        , -0.05617526, -0.25166784,  0.        ,  0.        ])
+2026-01-20 02:05:39,578 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:41,745 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:44,459 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:47,318 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:47,397 - INFO - num_full_subsets = 1
+2026-01-20 02:05:47,398 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:05:47,398 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:05:47,417 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:05:47,461 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:47,463 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:05:47,466 - INFO - phi = array([ 0.        , -0.02425337, -0.00497223,  0.        ,  0.        ,
+        0.        ,  0.        , -0.01885866,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.04039489,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.04476722, -0.05106706, -0.01999074, -0.06964983,  0.        ,
+        0.        , -0.04354768, -0.06159918,  0.        ,  0.        ])
+2026-01-20 02:05:47,467 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:47,467 - INFO - np.sum(self.kernelWeights) = np.float64(1.0)
+2026-01-20 02:05:47,471 - INFO - phi = array([0.        , 0.02425337, 0.00497223, 0.        , 0.        ,
+       0.        , 0.        , 0.01885866, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.04039489, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.04476722, 0.05106706, 0.01999074, 0.06964983, 0.        ,
+       0.        , 0.04354768, 0.06159918, 0.        , 0.        ])
+2026-01-20 02:05:49,449 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:50,902 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:53,175 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:55,548 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:05:55,615 - INFO - num_full_subsets = 1
+2026-01-20 02:05:55,617 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:05:55,618 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:05:55,636 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:05:55,675 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:55,676 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:05:55,680 - INFO - phi = array([0.        , 0.01509845, 0.        , 0.        , 0.01598517,
+       0.        , 0.        , 0.02863098, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.06418452, 0.09850431, 0.03303294, 0.10072374, 0.        ,
+       0.        , 0.06135787, 0.18553045, 0.01179215, 0.        ])
+2026-01-20 02:05:55,681 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:05:55,681 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000002)
+2026-01-20 02:05:55,684 - INFO - phi = array([ 0.        , -0.01509845,  0.        ,  0.        , -0.01598517,
+        0.        ,  0.        , -0.02863098,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.06418452, -0.09850431, -0.03303294, -0.10072374,  0.        ,
+        0.        , -0.06135787, -0.18553045, -0.01179215,  0.        ])
+2026-01-20 02:05:57,959 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:00,230 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:02,556 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:05,313 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:05,375 - INFO - num_full_subsets = 1
+2026-01-20 02:06:05,377 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:06:05,379 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:06:05,399 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:06:05,438 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:06:05,439 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:06:05,444 - INFO - phi = array([ 0.        , -0.01078868,  0.        ,  0.        ,  0.        ,
+        0.        ,  0.        , -0.01807005,  0.        , -0.0028756 ,
+        0.        ,  0.        ,  0.        , -0.03758452,  0.        ,
+       -0.00592327,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.06415986, -0.05825049, -0.0290819 , -0.0808425 ,  0.        ,
+        0.        ,  0.        , -0.07091177,  0.        ,  0.        ])
+2026-01-20 02:06:05,445 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:06:05,446 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:06:05,449 - INFO - phi = array([0.        , 0.01078868, 0.        , 0.        , 0.        ,
+       0.        , 0.        , 0.01807005, 0.        , 0.0028756 ,
+       0.        , 0.        , 0.        , 0.03758452, 0.        ,
+       0.00592327, 0.        , 0.        , 0.        , 0.        ,
+       0.06415986, 0.05825049, 0.0290819 , 0.0808425 , 0.        ,
+       0.        , 0.        , 0.07091177, 0.        , 0.        ])
+2026-01-20 02:06:07,275 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:09,283 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:11,439 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:13,855 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:13,899 - INFO - num_full_subsets = 1
+2026-01-20 02:06:13,901 - INFO - remaining_weight_vector = array([0.17893899, 0.1237109 , 0.09635176, 0.08016467, 0.06958738,
+       0.06223965, 0.05693513, 0.05301896, 0.05010292, 0.04794537,
+       0.04639159, 0.04534201, 0.04473475, 0.04453593])
+2026-01-20 02:06:13,902 - INFO - num_paired_subset_sizes = 14
+2026-01-20 02:06:13,920 - INFO - weight_left = np.float64(0.738876032213929)
+2026-01-20 02:06:13,958 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:06:13,959 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:06:13,965 - INFO - phi = array([0.        , 0.01783305, 0.        , 0.        , 0.026047  ,
+       0.        , 0.        , 0.04115893, 0.        , 0.        ,
+       0.        , 0.        , 0.        , 0.07267191, 0.        ,
+       0.        , 0.        , 0.        , 0.        , 0.        ,
+       0.06948469, 0.0252215 , 0.02740789, 0.10624207, 0.        ,
+       0.        , 0.04848145, 0.18158224, 0.        , 0.        ])
+2026-01-20 02:06:13,966 - INFO - np.sum(w_aug) = np.float64(30.000000000000007)
+2026-01-20 02:06:13,967 - INFO - np.sum(self.kernelWeights) = np.float64(1.0000000000000004)
+2026-01-20 02:06:13,970 - INFO - phi = array([ 0.        , -0.01783305,  0.        ,  0.        , -0.026047  ,
+        0.        ,  0.        , -0.04115893,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        , -0.07267191,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.06948469, -0.0252215 , -0.02740789, -0.10624207,  0.        ,
+        0.        , -0.04848145, -0.18158224,  0.        ,  0.        ])
+2026-01-20 02:06:16,131 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:18,364 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:20,378 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:23,049 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:23,053 - INFO -     Summary: Clarity=85.7, Coverage=100%, Valid=100%
+2026-01-20 02:06:23,055 - INFO - 
+  [LIME] + [few_shot]
+2026-01-20 02:06:25,415 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:27,709 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:30,024 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:32,233 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:34,933 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:37,058 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:39,175 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:41,649 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:43,998 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:46,197 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:46,204 - INFO -     Summary: Clarity=85.9, Coverage=98%, Valid=100%
+2026-01-20 02:06:46,206 - INFO - 
+  [LIME] + [cot]
+2026-01-20 02:06:52,622 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:06:56,598 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:02,414 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:07,469 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:13,644 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:19,442 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:24,751 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:30,347 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:35,755 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:41,725 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:41,727 - INFO -     Summary: Clarity=88.0, Coverage=100%, Valid=100%
+2026-01-20 02:07:41,728 - INFO - 
+  [LIME] + [self_consistency]
+2026-01-20 02:07:43,694 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:45,770 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:48,526 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:50,889 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:52,798 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:54,947 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:57,081 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:07:58,776 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:01,330 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:03,832 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:06,239 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:09,045 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:11,208 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:13,663 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:15,992 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:18,719 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:21,157 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:23,345 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:25,123 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:27,870 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:29,643 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:31,834 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:34,308 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:37,196 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:39,451 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:41,697 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:44,404 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:47,255 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:49,039 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:50,865 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:52,976 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:55,330 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:57,189 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:08:59,270 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:09:01,475 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:09:04,002 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:09:06,079 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:09:07,904 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:09:10,391 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:09:13,023 - INFO - HTTP Request: POST https://chat.readerbench.com/ollama/api/generate "HTTP/1.1 200 OK"
+2026-01-20 02:09:13,027 - INFO -     Summary: Clarity=85.3, Coverage=96%, Valid=100%
+2026-01-20 02:09:13,090 - INFO - 
+Detailed results saved to: ./evaluation_results/detailed_results.csv
+2026-01-20 02:09:13,180 - INFO - Generated explanations saved to: ./evaluation_results/generated_explanations.csv
+2026-01-20 02:09:13,339 - INFO - Summary report saved to: ./evaluation_results/summary_report.txt
+2026-01-20 02:09:13,351 - INFO - JSON summary saved to: ./evaluation_results/summary.json
+2026-01-20 02:09:13,354 - INFO - 
+Evaluation completed in 700.6 seconds

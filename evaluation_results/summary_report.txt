@@ -1,48 +1,66 @@
 
 ================================================================================
-                    XAI-NLG FRAMEWORK - EVALUATION SUMMARY
+            XAI-NLG FRAMEWORK - EVALUATION SUMMARY (OPTIMIZED)
 ================================================================================
 
 OVERVIEW
 --------
-Total evaluations: 60
-Successful evaluations: 60
+Total evaluations: 120
+Successful evaluations: 120
 Failed evaluations: 0
+Success rate: 100.0%
 
 
 OVERALL METRICS
 ---------------
-Clarity Score:  Mean=87.0, Std=6.7, Min=70.3, Max=97.6
-Coverage Score: Mean=91.3%, Std=19.3%
-Valid Rate:     71.7%
+Clarity Score:  Mean=86.6, Std=5.8, Min=72.1, Max=97.5
+Coverage Score: Mean=97.8%, Std=8.9%
+Valid Rate:     100.0%
 
 
 BY XAI METHOD
 -------------
-      SHAP: Clarity=88.0, Coverage=91.3%, Valid=47%
-      LIME: Clarity=86.0, Coverage=91.3%, Valid=97%
+      LIME: Clarity=86.8, Coverage=98.3%, Valid=100%
+      SHAP: Clarity=86.3, Coverage=97.3%, Valid=100%
 
 
 BY NLG TECHNIQUE
 ----------------
-          few_shot: Clarity=84.8, Coverage=94.0%, Valid=75%
-               cot: Clarity=91.6, Coverage=81.0%, Valid=65%
-  self_consistency: Clarity=84.5, Coverage=99.0%, Valid=75%
+               cot: Clarity=88.2, Coverage=98.0%, Valid=100%
+          few_shot: Clarity=86.1, Coverage=97.0%, Valid=100%
+  self_consistency: Clarity=85.4, Coverage=98.5%, Valid=100%
 
 
 BY MODEL
 --------
-       random_forest: Clarity=87.0, Coverage=88.0%, Valid=93%
-   gradient_boosting: Clarity=86.9, Coverage=94.7%, Valid=50%
+        RandomForest: Clarity=86.6, Coverage=96.7%, Valid=100%
+             XGBoost: Clarity=86.5, Coverage=99.0%, Valid=100%
 
 
-BEST COMBINATIONS (by Clarity)
-------------------------------
-  SHAP + cot               : Clarity=93.9, Coverage=82.0%
-  LIME + cot               : Clarity=89.4, Coverage=80.0%
-  SHAP + few_shot          : Clarity=85.4, Coverage=94.0%
-  SHAP + self_consistency  : Clarity=84.6, Coverage=98.0%
-  LIME + self_consistency  : Clarity=84.3, Coverage=100.0%
+BEST COMBINATIONS (by Clarity Score)
+------------------------------------
+  SHAP + cot               : Clarity=88.7, Coverage=98.0%, Valid=100%
+  LIME + cot               : Clarity=87.7, Coverage=98.0%, Valid=100%
+  LIME + few_shot          : Clarity=86.3, Coverage=99.0%, Valid=100%
+  LIME + self_consistency  : Clarity=86.3, Coverage=98.0%, Valid=100%
+  SHAP + few_shot          : Clarity=85.9, Coverage=95.0%, Valid=100%
+  SHAP + self_consistency  : Clarity=84.4, Coverage=99.0%, Valid=100%
+
+
+RECOMMENDATIONS
+---------------
+Best combination for presentation: SHAP + cot
+  - Clarity: 88.7/100
+  - Coverage: 98.0%
+  - Valid Rate: 100%
+
+
+SHAP vs LIME COMPARISON
+-----------------------
+SHAP: Clarity=86.3, Coverage=97.3%, Valid=100%
+LIME: Clarity=86.8, Coverage=98.3%, Valid=100%
+→ LIME produces clearer explanations
+→ LIME has higher validation rate
 
 
 ================================================================================

@@ -1,48 +1,97 @@
 {
-  "total_instances": 4,
-  "timestamp": "2026-01-20T00:35:18.353624",
-  "metrics": {
-    "fidelity_score": {
-      "mean": 0.575,
-      "median": 0.55,
-      "std": 0.09574271077563379,
-      "min": 0.5,
-      "max": 0.7
-    },
-    "sign_match_score": {
-      "mean": 0.15000000000000002,
-      "median": 0.1,
-      "std": 0.19148542155126763,
-      "min": 0.0,
-      "max": 0.4
-    },
-    "clarity_score": {
-      "mean": 92.67065583021612,
-      "median": 92.87195260879471,
-      "std": 0.6232265152023035,
-      "min": 91.80379746835443,
-      "max": 93.13492063492063
-    },
-    "coverage_topk": {
-      "mean": 15.0,
-      "median": 10.0,
-      "std": 19.148542155126762,
-      "min": 0.0,
-      "max": 40.0
-    },
-    "shap_conservation_error": {
-      "mean": 0.04000000000000006,
-      "median": 0.04000000000000006,
-      "std": 0.046188021535169946,
-      "min": 1.6653345369377348e-16,
-      "max": 0.07999999999999996
-    },
-    "shap_conservation_rate": 0.5
+  "timestamp": "2026-01-20T02:09:13.340656",
+  "total_evaluations": 120,
+  "successful_evaluations": 120,
+  "overall": {
+    "clarity_mean": 86.55,
+    "clarity_std": 5.84,
+    "coverage_mean": 97.83,
+    "coverage_std": 8.91,
+    "valid_rate": 100.0
   },
-  "dataset_breast_cancer": {
-    "count": 4,
-    "clarity_mean": 92.67065583021612,
-    "coverage_mean": 15.0,
-    "fidelity_mean": 0.575
-  }
+  "by_xai_method": {
+    "shap": {
+      "clarity_mean": 86.31,
+      "coverage_mean": 97.33,
+      "valid_rate": 100.0
+    },
+    "lime": {
+      "clarity_mean": 86.8,
+      "coverage_mean": 98.33,
+      "valid_rate": 100.0
+    }
+  },
+  "by_nlg_technique": {
+    "few_shot": {
+      "clarity_mean": 86.11,
+      "coverage_mean": 97.0,
+      "valid_rate": 100.0
+    },
+    "cot": {
+      "clarity_mean": 88.2,
+      "coverage_mean": 98.0,
+      "valid_rate": 100.0
+    },
+    "self_consistency": {
+      "clarity_mean": 85.35,
+      "coverage_mean": 98.5,
+      "valid_rate": 100.0
+    }
+  },
+  "by_model": {
+    "RandomForest": {
+      "clarity_mean": 86.63,
+      "coverage_mean": 96.67,
+      "valid_rate": 100.0
+    },
+    "XGBoost": {
+      "clarity_mean": 86.47,
+      "coverage_mean": 99.0,
+      "valid_rate": 100.0
+    }
+  },
+  "best_combinations": [
+    {
+      "xai_method": "shap",
+      "nlg_technique": "cot",
+      "clarity": 88.67,
+      "coverage": 98.0,
+      "valid_rate": 100.0
+    },
+    {
+      "xai_method": "lime",
+      "nlg_technique": "cot",
+      "clarity": 87.72,
+      "coverage": 98.0,
+      "valid_rate": 100.0
+    },
+    {
+      "xai_method": "lime",
+      "nlg_technique": "few_shot",
+      "clarity": 86.35,
+      "coverage": 99.0,
+      "valid_rate": 100.0
+    },
+    {
+      "xai_method": "lime",
+      "nlg_technique": "self_consistency",
+      "clarity": 86.31,
+      "coverage": 98.0,
+      "valid_rate": 100.0
+    },
+    {
+      "xai_method": "shap",
+      "nlg_technique": "few_shot",
+      "clarity": 85.86,
+      "coverage": 95.0,
+      "valid_rate": 100.0
+    },
+    {
+      "xai_method": "shap",
+      "nlg_technique": "self_consistency",
+      "clarity": 84.4,
+      "coverage": 99.0,
+      "valid_rate": 100.0
+    }
+  ]
 }
